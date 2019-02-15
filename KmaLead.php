@@ -160,20 +160,32 @@ class KmaLead
         }
     }
 
+    public static function getAllHeaders()
+    {
+        $headers = [];
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+            }
+        }
+        return $headers;
+    }
+
     private function sendRequest($data, $headers)
     {
         if ($curl = curl_init()) {
             $this->_debugMsg(" - Отправка запроса апи {$data['method']} - ");
             curl_setopt($curl, CURLOPT_URL, $this->_apiUrl);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_HEADER, false);
-            curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
             if (!empty($headers)) {
                 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             }
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLINFO_HEADER_OUT, true);
             $result = curl_exec($curl);
+            echo $result;
             $header_out = curl_getinfo($curl, CURLINFO_HEADER_OUT);
             curl_close($curl);
             $array = json_decode($result, true);
