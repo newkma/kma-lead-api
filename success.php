@@ -14,39 +14,27 @@ $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
 
 $data = [
     'channel' => $channel,
-    'ip' => $_SERVER['REMOTE_ADDR'],
-    'name' => $name,
-    'phone' => $phone,
-    'data1' => isset($_POST['data1']) ? $_POST['data1'] : '',
-    'data2' => isset($_POST['data2']) ? $_POST['data2'] : '',
-    'data3' => isset($_POST['data3']) ? $_POST['data3'] : '',
-    'data4' => isset($_POST['data4']) ? $_POST['data4'] : '',
-    'data5' => isset($_POST['data5']) ? $_POST['data5'] : '',
+    'ip'      => $_SERVER['REMOTE_ADDR'],
+    'name'    => $name,
+    'phone'   => $phone,
+    'data1'   => isset($_POST['data1']) ? $_POST['data1'] : '',
+    'data2'   => isset($_POST['data2']) ? $_POST['data2'] : '',
+    'data3'   => isset($_POST['data3']) ? $_POST['data3'] : '',
+    'data4'   => isset($_POST['data4']) ? $_POST['data4'] : '',
+    'data5'   => isset($_POST['data5']) ? $_POST['data5'] : '',
 ];
-
-$headers = [];
-
-if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    array_push($headers, 'X-Forwarded-For: ' . $_SERVER['HTTP_X_FORWARDED_FOR']);
-}
-
-if (isset($_SERVER['HTTP_USER_AGENT']) && !empty($_SERVER['HTTP_USER_AGENT'])) {
-    array_push($headers, 'User-Agent: ' . $_SERVER['HTTP_USER_AGENT']);
-}
-
-if (isset($_POST['referer']) && !empty($_POST['referer'])) {
-    array_push($headers, 'Referer: ' . $_POST['referer']);
-}
-
-// определение класса устройства
-require_once 'Mobile_Detect.php';
-$detect = new Mobile_Detect;
-$data['ismobile'] = (int)$detect->isMobile();
 
 // класс для отправки лида в КМА
 require_once 'KmaLead.php';
 
+/** @var KmaLead $kma */
 $kma = KmaLead::getInstance();
+
+$headers = $kma->getHttpHeaders();
+
+if (isset($_POST['referer']) && !empty($_POST['referer'])) {
+    $headers['Referer'] = $_POST['referer'];
+}
 
 // включить вывод ошибок
 //$kma->debug = true;
