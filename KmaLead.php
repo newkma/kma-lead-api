@@ -160,7 +160,7 @@ class KmaLead
         }
     }
 
-    public static function getHttpHeaders()
+    public function getHttpHeaders()
     {
         $headers = [];
         foreach ($_SERVER as $name => $value) {
@@ -168,11 +168,11 @@ class KmaLead
                 $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
             }
         }
-        self::filterHeaders($headers);
+        $this->filterHeaders($headers);
         return $headers;
     }
 
-    private static function filterHeaders(&$headers)
+    private function filterHeaders(&$headers)
     {
         unset($headers['Dnt']);
         unset($headers['Host']);
