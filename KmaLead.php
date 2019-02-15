@@ -6,7 +6,6 @@ class KmaLead
     protected static $_instance;
     private $_pdo = null;
     public $debug = false;
-    public $errorMsg = null;
 
     public static function getInstance()
     {
@@ -17,18 +16,11 @@ class KmaLead
         return static::$_instance;
     }
 
-    private function _errorMsg($data)
-    {
-        $this->errorMsg = $data;
-    }
-
     private function _debugMsg($data)
     {
         if ($this->debug) {
             if (is_array($data)) {
-                echo '<pre>';
-                print_r($data);
-                echo '</pre>';
+                echo '<pre>'; print_r($data); echo '</pre>';
             } else {
                 echo "<br> $data <br>";
             }
