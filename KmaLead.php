@@ -160,7 +160,7 @@ class KmaLead
         }
     }
 
-    public static function getAllHeaders()
+    public static function getHttpHeaders()
     {
         $headers = [];
         foreach ($_SERVER as $name => $value) {
@@ -168,7 +168,37 @@ class KmaLead
                 $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
             }
         }
+        self::filterHeaders($headers);
         return $headers;
+    }
+
+    private static function filterHeaders(&$headers)
+    {
+        unset($headers['Dnt']);
+        unset($headers['Host']);
+        unset($headers['Cookie']);
+        unset($headers['Connection']);
+        unset($headers['Content-Type']);
+        unset($headers['Content-Length']);
+        unset($headers['Upgrade-Insecure-Requests']);
+        //unset($headers['Accept']);
+        //unset($headers['Accept-Encoding']);
+        //unset($headers['Accept-Language']);
+        //unset($headers['Pragma']);
+        //unset($headers['Cache-Control']);
+        //unset($headers['Origin']);
+        if (isset($headers['Referer']) && !empty($headers['Referer'])) {
+            $headers['Hostname'] = $headers['Referer'];
+        }
+        unset($headers['Referer']);
+    }
+
+    private function prepareHeaders($headers)
+    {
+        array_walk($headers, function (&$value, $key) {
+            $value = "$key: $value";
+        });
+        return array_values($headers);
     }
 
     private function sendRequest($data, $headers)
@@ -178,6 +208,7 @@ class KmaLead
             curl_setopt($curl, CURLOPT_URL, $this->_apiUrl);
             curl_setopt($curl, CURLOPT_HEADER, false);
             if (!empty($headers)) {
+                $headers = $this->prepareHeaders($headers);
                 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             }
             curl_setopt($curl, CURLOPT_POST, true);
