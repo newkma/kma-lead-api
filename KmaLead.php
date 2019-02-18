@@ -78,15 +78,13 @@ class KmaLead
 
     private function filterHeaders()
     {
+        // в кастомный заголовок Hostname нужно передать текущий Host
+        $this->headers['Hostname'] = $this->headers['Host'];
         // убираем перекрывающие заголовки
         unset($this->headers['Host']);
         unset($this->headers['Cookie']);
         unset($this->headers['Content-Type']);
         unset($this->headers['Content-Length']);
-        // в кастомный заголовок Hostname нужно передать текущий Host
-        if (isset($this->headers['Referer']) && !empty($this->headers['Referer'])) {
-            $this->headers['Hostname'] = $this->headers['Referer'];
-        }
         // в любом случае очистить Referer - он будет равен Host
         unset($this->headers['Referer']);
         // записать в Referer переданное в POST значение из JS
