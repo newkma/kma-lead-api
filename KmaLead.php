@@ -174,19 +174,10 @@ class KmaLead
 
     private function filterHeaders(&$headers)
     {
-        unset($headers['Dnt']);
         unset($headers['Host']);
         unset($headers['Cookie']);
-        unset($headers['Connection']);
         unset($headers['Content-Type']);
         unset($headers['Content-Length']);
-        unset($headers['Upgrade-Insecure-Requests']);
-        //unset($headers['Accept']);
-        //unset($headers['Accept-Encoding']);
-        //unset($headers['Accept-Language']);
-        //unset($headers['Pragma']);
-        //unset($headers['Cache-Control']);
-        //unset($headers['Origin']);
         if (isset($headers['Referer']) && !empty($headers['Referer'])) {
             $headers['Hostname'] = $headers['Referer'];
         }
