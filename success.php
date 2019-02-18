@@ -8,14 +8,11 @@ ini_set('display_errors', 0);
 $token = 'xxx'; // access token
 $channel = 'xxx'; // channel
 
-$name = isset($_POST['name']) ? $_POST['name'] : '';
-$phone = isset($_POST['phone']) ? $_POST['phone'] : '';
-
 $data = [
     'channel' => $channel,
     'ip'      => $_SERVER['REMOTE_ADDR'],
-    'name'    => $name,
-    'phone'   => $phone,
+    'name'    => isset($_POST['name']) ? $_POST['name'] : '',
+    'phone'   => isset($_POST['phone']) ? $_POST['phone'] : '',
     'data1'   => isset($_POST['data1']) ? $_POST['data1'] : '',
     'data2'   => isset($_POST['data2']) ? $_POST['data2'] : '',
     'data3'   => isset($_POST['data3']) ? $_POST['data3'] : '',
