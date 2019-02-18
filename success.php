@@ -32,11 +32,10 @@ $kma->debug = true;
 // отправка лида
 $order = $kma->sendLead($data);
 
-// заказ успешно создан
-if (!empty($order)) {
-    include_once 'tpl_success.php';
-    exit();
+if (empty($order)) {
+    include_once 'tpl_error.php'; // ошибка
+} else {
+    include_once 'tpl_success.php'; // успех
 }
 
-// вывод ошибок
-include_once 'tpl_error.php';
+exit();
