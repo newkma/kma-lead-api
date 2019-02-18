@@ -20,12 +20,15 @@
     xhr.setRequestHeader('X-Kma-Api', 'click');
     xhr.send();
     xhr.onload = function() {
+        let click = this.responseText;
+        if (!Number.isInteger(+click)) return;
+
         let forms = document.getElementsByTagName("form");
         for (let i = 0; i < forms.length; i++) {
             let input = document.createElement("input");
             input.type = "hidden";
             input.name = "click";
-            input.value = this.responseText;
+            input.value = click;
             forms[i].appendChild(input);
         }
     };
