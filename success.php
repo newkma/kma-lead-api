@@ -24,11 +24,10 @@ $data = [
 require_once 'KmaLead.php';
 
 /** @var KmaLead $kma */
-$kma = KmaLead::getInstance();
-$kma->setToken($token);
+$kma = new KmaLead($token);
 
 // включить вывод ошибок
-//$kma->debug = true;
+$kma->debug = true;
 
 // отправка лида
 $order = $kma->sendLead($data);

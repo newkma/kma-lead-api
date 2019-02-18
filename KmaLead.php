@@ -5,41 +5,17 @@ class KmaLead
     private $url = 'https://api.kma1.biz/lead/add';
     private $token;
     private $headers = [];
-    protected static $_instance;
     public $debug = false;
 
-    public static function getInstance()
-    {
-        if (null === static::$_instance) {
-            static::$_instance = new static();
-        }
-        return static::$_instance;
-    }
-
-    public function setToken($token = '')
+    public function __construct($token = '')
     {
         $this->token = $token;
     }
 
-    private function _debugMsg($data)
-    {
-        if ($this->debug) {
-            if (is_array($data)) {
-                echo '<pre>'; print_r($data); echo '</pre>';
-            } else {
-                echo "<br> $data <br>";
-            }
-        }
-    }
-
     public function sendLead($data)
     {
-        if ($result = $this->send($data)) {
-            if (($result['code'] == 0) && isset($result['id'])) {
-                return $result['id'];
-            }
-        }
-        return false;
+        $result = $this->send($data);
+        return (!empty($result) && isset($result['id'])) ? $result['id'] : false;
     }
 
     private function send($data)
@@ -51,7 +27,7 @@ class KmaLead
         if ($array['code'] == 0) {
             return ['code' => 0, 'id' => $array['order']];
         } else {
-            $this->_debugMsg('Код ошибки: ' . $array['code'] . '. Текст ошибки: ' . $array['message']);
+            $this->echoDebugMessage("Код ошибки: {$array['code']}. Текст ошибки: {$array['message']}");
             return ['code' => $array['code']];
         }
     }
@@ -59,7 +35,7 @@ class KmaLead
     private function sendRequest($data)
     {
         if ($curl = curl_init()) {
-            $this->_debugMsg(" - Отправка запроса апи {$data['method']} - ");
+            $this->echoDebugMessage(" - Отправка запроса апи {$data['method']} - ");
             curl_setopt($curl, CURLOPT_URL, $this->url);
             curl_setopt($curl, CURLOPT_HEADER, false);
             curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
@@ -71,9 +47,9 @@ class KmaLead
             $header_out = curl_getinfo($curl, CURLINFO_HEADER_OUT);
             curl_close($curl);
             $array = json_decode($result, true);
-            $this->_debugMsg("<pre>$header_out</pre>");
-            $this->_debugMsg($data);
-            $this->_debugMsg($array);
+            $this->echoDebugMessage("<pre>$header_out</pre>");
+            $this->echoDebugMessage($data);
+            $this->echoDebugMessage($array);
             return $array;
         }
         return false;
@@ -116,6 +92,17 @@ class KmaLead
         // записать в Referer переданное в POST значение из JS
         if (isset($_POST['referer']) && !empty($_POST['referer'])) {
             $this->headers['Referer'] = $_POST['referer'];
+        }
+    }
+
+    private function echoDebugMessage($data)
+    {
+        if ($this->debug) {
+            if (is_array($data)) {
+                echo '<pre>'; print_r($data); echo '</pre>';
+            } else {
+                echo "<br> $data <br>";
+            }
         }
     }
 }
