@@ -5,8 +5,7 @@ error_reporting(0);
 ini_set('display_errors', 0);
 
 // настройки
-$username = 'xxx'; // email
-$password = 'xxx'; // pass
+$token = 'xxx'; // access token
 $channel = 'xxx'; // channel
 
 $name = isset($_POST['name']) ? $_POST['name'] : '';
@@ -29,18 +28,13 @@ require_once 'KmaLead.php';
 
 /** @var KmaLead $kma */
 $kma = KmaLead::getInstance();
-
-$headers = $kma->getHttpHeaders();
-
-if (isset($_POST['referer']) && !empty($_POST['referer'])) {
-    $headers['Referer'] = $_POST['referer'];
-}
+$kma->setToken($token);
 
 // включить вывод ошибок
 //$kma->debug = true;
 
 // отправка лида
-$order = $kma->sendLead($username, $password, $data, $headers);
+$order = $kma->sendLead($data);
 
 // заказ успешно создан
 if (!empty($order)) {

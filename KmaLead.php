@@ -2,9 +2,10 @@
 
 class KmaLead
 {
-    private $_apiUrl = 'http://api.kma1.biz/';
+    private $url = 'https://api.kma1.biz/lead/add';
+    private $token;
+    private $headers = [];
     protected static $_instance;
-    private $_pdo = null;
     public $debug = false;
 
     public static function getInstance()
@@ -12,8 +13,12 @@ class KmaLead
         if (null === static::$_instance) {
             static::$_instance = new static();
         }
-
         return static::$_instance;
+    }
+
+    public function setToken($token = '')
+    {
+        $this->token = $token;
     }
 
     private function _debugMsg($data)
@@ -27,187 +32,42 @@ class KmaLead
         }
     }
 
-    private function _connectDb()
+    public function sendLead($data)
     {
-        try {
-            $this->_pdo = new PDO('sqlite:kma.sqlite3');
-        } catch (PDOException $e) {
-            return false;
-        }
-        return true;
-    }
-
-    private function _getAuth()
-    {
-        if ($this->_pdo == null) {
-            $this->_connectDb();
-        }
-
-        if ($this->_pdo != null) {
-            $stmt = $this->_pdo->prepare("SELECT id, hash FROM kma_api_hash");
-            if (!empty($stmt)) {
-                $stmt->execute();
-                return $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result = $this->send($data)) {
+            if (($result['code'] == 0) && isset($result['id'])) {
+                return $result['id'];
             }
         }
+        return false;
     }
 
-    private function _setAuth($auth)
+    private function send($data)
     {
-        $id = isset($auth['id']) ? $auth['id'] : 0;
-        $hash = isset($auth['hash']) ? $auth['hash'] : '';
-
-        if (empty($id) || empty($hash)) {
-            $this->_debugMsg('Ошибка при записи авторизационных данных.');
-            return false;
-        }
-
-        if ($this->_pdo == null) {
-            $this->_connectDb();
-        }
-
-        if ($this->_pdo != null) {
-            $this->_pdo->exec("CREATE TABLE IF NOT EXISTS kma_api_hash (id INTEGER PRIMARY KEY, hash TEXT, time INTEGER)");
-
-            $stmt = $this->_pdo->prepare("REPLACE INTO kma_api_hash (id, hash, time) VALUES (:id, :hash, :time)");
-            return $stmt->execute([
-                ':id' => $id,
-                ':hash' => $hash,
-                ':time' => time(),
-            ]);
-        }
-    }
-
-    public function auth($username, $password, $generate = false)
-    {
-        if (empty($username) || empty($password)) {
-            $this->_debugMsg('Не указан email или пароль!');
-            return false;
-        }
-
-        if (empty($generate)) {
-            $auth = $this->_getAuth();
-
-            if (!empty($auth)) {
-                $this->_debugMsg('- Использование сохранненых данных авторизации -');
-                $this->_debugMsg($auth);
-                return $auth;
-            }
-        }
-
-        $data = [
-            'method' => 'auth',
-            'username' => $username,
-            'pass' => $password
-        ];
-
-        $array = $this->sendRequest($data, []);
-
-        $this->_debugMsg('- Генерирование новых данных авторизации -');
-        $this->_debugMsg($array);
-
+        $array = $this->sendRequest($data);
         if (empty($array)) {
             return false;
         }
-
         if ($array['code'] == 0) {
-            $auth = ['id' => $array['authid'], 'hash' => $array['authhash']];
-            $this->_setAuth($auth);
-            return $auth;
+            return ['code' => 0, 'id' => $array['order']];
         } else {
-            $this->_debugMsg('Код ошибки: ' . $array['code'] . '. Текст ошибки: ' . $array['msg']);
-            return false;
-        }
-    }
-
-    public function sendLead($username, $password, $data, $headers)
-    {
-        if ($auth = $this->auth($username, $password)) {
-            if ($result = $this->send($auth, $data, $headers)) {
-                if (($result['code'] == 0) && isset($result['id'])) {
-                    return $result['id'];
-                } elseif ($result['code'] == 6) {
-                    // если была ошибка авторизации получаем новый хеш для авторизации и повторям создание лида
-                    if ($auth = $this->auth($username, $password, true)) {
-                        if ($result = $this->send($auth, $data, $headers)) {
-                            if (($result['code'] == 0) && isset($result['id'])) {
-                                return $result['id'];
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public function send($auth, $data, $headers)
-    {
-        $data['method'] = 'addlead';
-        $data['authid'] = isset($auth['id']) ? $auth['id'] : 0;
-        $data['authhash'] = isset($auth['hash']) ? $auth['hash'] : '';
-
-        $array = $this->sendRequest($data, $headers);
-
-        if (empty($array)) {
-            return false;
-        }
-
-        if ($array['code'] == 0) {
-            return ['code' => 0, 'id' => $array['orderid']];
-        } else {
-            $this->_debugMsg('Код ошибки: ' . $array['code'] . '. Текст ошибки: ' . $array['msg']);
+            $this->_debugMsg('Код ошибки: ' . $array['code'] . '. Текст ошибки: ' . $array['message']);
             return ['code' => $array['code']];
         }
     }
 
-    public function getHttpHeaders()
-    {
-        $headers = [];
-        foreach ($_SERVER as $name => $value) {
-            if (substr($name, 0, 5) == 'HTTP_') {
-                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
-            }
-        }
-        $this->filterHeaders($headers);
-        return $headers;
-    }
-
-    private function filterHeaders(&$headers)
-    {
-        unset($headers['Host']);
-        unset($headers['Cookie']);
-        unset($headers['Content-Type']);
-        unset($headers['Content-Length']);
-        if (isset($headers['Referer']) && !empty($headers['Referer'])) {
-            $headers['Hostname'] = $headers['Referer'];
-        }
-        unset($headers['Referer']);
-    }
-
-    private function prepareHeaders($headers)
-    {
-        array_walk($headers, function (&$value, $key) {
-            $value = "$key: $value";
-        });
-        return array_values($headers);
-    }
-
-    private function sendRequest($data, $headers)
+    private function sendRequest($data)
     {
         if ($curl = curl_init()) {
             $this->_debugMsg(" - Отправка запроса апи {$data['method']} - ");
-            curl_setopt($curl, CURLOPT_URL, $this->_apiUrl);
+            curl_setopt($curl, CURLOPT_URL, $this->url);
             curl_setopt($curl, CURLOPT_HEADER, false);
-            if (!empty($headers)) {
-                $headers = $this->prepareHeaders($headers);
-                curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-            }
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLINFO_HEADER_OUT, true);
             $result = curl_exec($curl);
-            echo $result;
             $header_out = curl_getinfo($curl, CURLINFO_HEADER_OUT);
             curl_close($curl);
             $array = json_decode($result, true);
@@ -216,7 +76,46 @@ class KmaLead
             $this->_debugMsg($array);
             return $array;
         }
-
         return false;
+    }
+
+    private function getHeaders()
+    {
+        $this->setHeaders();
+        array_walk($this->headers, function (&$value, $key) {
+            $value = "$key: $value";
+        });
+        return array_values($this->headers);
+    }
+
+    private function setHeaders()
+    {
+         foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $this->headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+            }
+        }
+        $this->filterHeaders();
+        $this->headers['Accept'] = 'application/json';
+        $this->headers['Authorization'] = "Bearer {$this->token}";
+    }
+
+    private function filterHeaders()
+    {
+        // убираем перекрывающие заголовки
+        unset($this->headers['Host']);
+        unset($this->headers['Cookie']);
+        unset($this->headers['Content-Type']);
+        unset($this->headers['Content-Length']);
+        // в кастомный заголовок Hostname нужно передать текущий Host
+        if (isset($this->headers['Referer']) && !empty($this->headers['Referer'])) {
+            $this->headers['Hostname'] = $this->headers['Referer'];
+        }
+        // в любом случае очистить Referer - он будет равен Host
+        unset($this->headers['Referer']);
+        // записать в Referer переданное в POST значение из JS
+        if (isset($_POST['referer']) && !empty($_POST['referer'])) {
+            $this->headers['Referer'] = $_POST['referer'];
+        }
     }
 }
