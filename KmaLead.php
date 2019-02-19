@@ -17,10 +17,6 @@ class KmaLead
     {
         $this->setHeaders();
         $this->headers['X-Forwarded-For'] = $_SERVER['REMOTE_ADDR'];
-        if (isset($this->headers['X-Referer'])) {
-            $this->headers['Referer'] = $this->headers['X-Referer'];
-            unset($this->headers['X-Referer']);
-        }
         if ($curl = curl_init()) {
             curl_setopt($curl, CURLOPT_URL, $this->clickUrl . $channel);
             curl_setopt($curl, CURLOPT_HEADER, false);
@@ -108,6 +104,10 @@ class KmaLead
         unset($this->headers['Content-Type']);
         unset($this->headers['Content-Length']);
         unset($this->headers['Referer']);
+        if (isset($this->headers['X-Referer']) && !empty($this->headers['X-Referer'])) {
+            $this->headers['Referer'] = $this->headers['X-Referer'];
+        }
+        unset($this->headers['X-Referer']);
     }
 
     private function echoDebugMessage($data)
