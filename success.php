@@ -26,6 +26,16 @@ require_once 'KmaLead.php';
 /** @var KmaLead $kma */
 $kma = new KmaLead($token);
 
+// не создаем новый клик при обновлении страницы
+if (isset($_SERVER['HTTP_X_KMA_API']) && $_SERVER['HTTP_X_KMA_API'] === 'click') {
+    session_start();
+    $_SESSION['kma-click'] = isset($_SESSION['kma-click']) ? $_SESSION['kma-click'] : $kma->getClick($channel);
+    echo $_SESSION['kma-click'];
+    session_write_close();
+    exit();
+}
+unset($_SESSION['kma-click']);
+
 // включить вывод ошибок
 $kma->debug = true;
 
