@@ -15,6 +15,7 @@
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "/api/success.php", true);
     xhr.setRequestHeader('X-Kma-Api', 'click');
+    xhr.setRequestHeader('X-Referer', document.referrer);
     xhr.send();
     xhr.onload = function() {
         let array;

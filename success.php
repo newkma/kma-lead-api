@@ -28,10 +28,11 @@ $kma = new KmaLead($token);
 
 // не создаем новый клик при обновлении страницы
 if (isset($_SERVER['HTTP_X_KMA_API']) && $_SERVER['HTTP_X_KMA_API'] === 'click') {
-    session_start();
-    $_SESSION['kma-click'] = isset($_SESSION['kma-click']) ? $_SESSION['kma-click'] : $kma->getClick($channel);
-    echo $_SESSION['kma-click'];
-    session_write_close();
+    $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
+    //session_start();
+    //$_SESSION['kma-click'] = isset($_SESSION['kma-click']) ? $_SESSION['kma-click'] : $kma->getClick($channel);
+    //echo $_SESSION['kma-click'];
+    echo $kma->getClick($channel);
     exit();
 }
 unset($_SESSION['kma-click']);
