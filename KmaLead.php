@@ -100,7 +100,9 @@ class KmaLead
 
     private function filterHeaders()
     {
-        $this->headers['Hostname'] = $this->headers['Host'];
+        if (isset($this->headers['Host']) && !empty($this->headers['Host'])) {
+            $this->headers['Host-Url'] = $_SERVER['REQUEST_SCHEME'] . "://" . $this->headers['Host'];
+        }
         unset($this->headers['Host']);
         unset($this->headers['Cookie']);
         unset($this->headers['Content-Type']);
