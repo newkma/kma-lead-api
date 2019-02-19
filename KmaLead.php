@@ -2,7 +2,8 @@
 
 class KmaLead
 {
-    private $url = 'https://api.kma1.biz/lead/add';
+    private $leadUrl = 'https://api.kma1.biz/lead/add';
+    private $clickUrl = 'https://kshop5.pro/';
     private $token;
     private $headers = [];
     public $debug = false;
@@ -10,6 +11,21 @@ class KmaLead
     public function __construct($token = '')
     {
         $this->token = $token;
+    }
+
+    public function getClick($channel)
+    {
+        if ($curl = curl_init()) {
+            curl_setopt($curl, CURLOPT_URL, $this->clickUrl . $channel);
+            curl_setopt($curl, CURLOPT_HEADER, false);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $result = curl_exec($curl);
+            curl_close($curl);
+            header('Content-Type: application/json');
+            return $result;
+        }
+        return "{}";
     }
 
     public function sendLead($data)
@@ -36,7 +52,7 @@ class KmaLead
     {
         if ($curl = curl_init()) {
             $this->echoDebugMessage(" - Отправка запроса апи {$data['method']} - ");
-            curl_setopt($curl, CURLOPT_URL, $this->url);
+            curl_setopt($curl, CURLOPT_URL, $this->leadUrl);
             curl_setopt($curl, CURLOPT_HEADER, false);
             curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
             curl_setopt($curl, CURLOPT_POST, true);
