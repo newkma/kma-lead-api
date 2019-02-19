@@ -15,8 +15,12 @@ class KmaLead
 
     public function getClick($channel)
     {
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
-        $_SERVER['HTTP_REFERER'] = isset($_SERVER['HTTP_X_REFERER']) ? $_SERVER['HTTP_X_REFERER'] : '';
+        $this->setHeaders();
+        $this->headers['X-Forwarded-For'] = $_SERVER['REMOTE_ADDR'];
+        if (isset($this->headers['X-Referer'])) {
+            $this->headers['Referer'] = $this->headers['X-Referer'];
+            unset($this->headers['X-Referer']);
+        }
         if ($curl = curl_init()) {
             curl_setopt($curl, CURLOPT_URL, $this->clickUrl . $channel);
             curl_setopt($curl, CURLOPT_HEADER, false);
@@ -52,6 +56,7 @@ class KmaLead
 
     private function sendRequest($data)
     {
+        $this->setHeaders();
         if ($curl = curl_init()) {
             $this->echoDebugMessage(" - Отправка запроса апи {$data['method']} - ");
             curl_setopt($curl, CURLOPT_URL, $this->leadUrl);
@@ -75,7 +80,6 @@ class KmaLead
 
     private function getHeaders()
     {
-        $this->setHeaders();
         array_walk($this->headers, function (&$value, $key) {
             $value = "$key: $value";
         });
@@ -101,6 +105,7 @@ class KmaLead
         unset($this->headers['Cookie']);
         unset($this->headers['Content-Type']);
         unset($this->headers['Content-Length']);
+        unset($this->headers['Referer']);
     }
 
     private function echoDebugMessage($data)
