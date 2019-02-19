@@ -15,6 +15,8 @@ class KmaLead
 
     public function getClick($channel)
     {
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
+        $_SERVER['HTTP_REFERER'] = isset($_SERVER['HTTP_X_REFERER']) ? $_SERVER['HTTP_X_REFERER'] : '';
         if ($curl = curl_init()) {
             curl_setopt($curl, CURLOPT_URL, $this->clickUrl . $channel);
             curl_setopt($curl, CURLOPT_HEADER, false);
@@ -99,14 +101,6 @@ class KmaLead
         unset($this->headers['Cookie']);
         unset($this->headers['Content-Type']);
         unset($this->headers['Content-Length']);
-        if (isset($_SERVER['HTTP_X_REFERER']) && !empty($_SERVER['HTTP_X_REFERER'])) {
-            $this->headers['Referer'] = $_SERVER['HTTP_X_REFERER'];
-        } else {
-            unset($this->headers['Referer']);
-        }
-        if (isset($_POST['referer']) && !empty($_POST['referer'])) {
-            $this->headers['Referer'] = $_POST['referer'];
-        }
     }
 
     private function echoDebugMessage($data)
