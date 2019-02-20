@@ -19,7 +19,7 @@ class KmaLead
         $this->headers['X-Forwarded-For'] = $_SERVER['REMOTE_ADDR'];
         $this->headers['X-Kma-Channel'] = $channel;
         if ($curl = curl_init()) {
-            curl_setopt($curl, CURLOPT_URL, $this->clickUrl . "?" . $_SERVER['QUERY_STRING']);
+            curl_setopt($curl, CURLOPT_URL, $this->clickUrl . "?" . http_build_query($_GET));
             curl_setopt($curl, CURLOPT_HEADER, false);
             curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
