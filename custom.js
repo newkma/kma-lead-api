@@ -11,7 +11,6 @@
     }
 }());
 
-/*
 (function() {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "/api/success.php" + document.location.search, true);
@@ -32,4 +31,3 @@
         }
     };
 }());
-*/
