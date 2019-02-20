@@ -545,10 +545,11 @@ if (window.requestIdleCallback) {
     }
 }());
 
-/*
 (function() {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", "/api/success.php" + document.location.search, true);
+    // TODO: добавить маппинг utm меток в data1-data5
+    let query = "data1=test";
+    xhr.open("GET", "/api/success.php?" + query, true);
     xhr.setRequestHeader('X-Kma-Api', 'click');
     xhr.setRequestHeader('X-Referer', document.referrer);
     xhr.send();
@@ -566,4 +567,3 @@ if (window.requestIdleCallback) {
         }
     };
 }());
-*/
