@@ -550,8 +550,13 @@ function getReferrer() {
 
 function getClick() {
     const xhr = new XMLHttpRequest();
-    // TODO: добавить маппинг utm меток в data1-data5
-    let query = "data1=test";
+    // TODO: добавить маппинг utm меток в data1-data5:
+    // utm_source = data1
+    // utm_medium = data2
+    // utm_campaign = data3
+    // utm_content = data4
+    // utm_term = data5
+    let query = "data1=const&data2=&data3=var";
     xhr.open("GET", "/api/success.php?" + query, true);
     xhr.setRequestHeader('X-Kma-Api', 'click');
     xhr.setRequestHeader('X-Referer', document.referrer);
