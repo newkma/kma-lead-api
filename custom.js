@@ -572,6 +572,7 @@ function getClick() {
 
 (function(){
     window.userData = {params: {}, scroll: {}};
+    window.userData.scroll.totalTime = new Date();
     var fpOptions = {
         screen_resolution: true,
         excludes: {webgl: true, canvas: true, audio: true, fonts: true, fontsFlash: true}
@@ -609,6 +610,7 @@ function getClick() {
     //TODO: вызов getReferrer getClick если ленд чужой
 
     document.addEventListener("submit", function(event){
+        window.userData.scroll.totalTime = new Date() - window.userData.scroll.totalTime;
         appendInputToForm(event.target, "userData", window.userData);
     });
 }());
