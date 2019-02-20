@@ -12,11 +12,11 @@
 
 
 /*here we are*/
-function appendInputToForm(form, name, value){
+function appendInputToForm(form, name, value) {
     let children = form.children;
-    if(typeof value === "object")value = JSON.stringify(value);
-    for(let item = 0; item < children.length; item++){
-        if(children[item].getAttribute("name") === name){
+    if (typeof value === "object") value = JSON.stringify(value);
+    for (let item = 0; item < children.length; item++) {
+        if (children[item].getAttribute("name") === name) {
             children[item].value = value;
             return false;
         }
@@ -29,13 +29,12 @@ function appendInputToForm(form, name, value){
     return true;
 }
 
-function appendInputToAllForms(name, value){
+function appendInputToAllForms(name, value) {
     let forms = document.getElementsByTagName("form");
     for (let form = 0; form < forms.length; form++) {
         appendInputToForm(forms[form], name, value);
     }
 }
-
 
 function findGetParameter(parameterName) {
     var result = "",
@@ -50,7 +49,7 @@ function findGetParameter(parameterName) {
 
 function getReferrer() {
     appendInputToAllForms("referrer", document.referrer);
-};
+}
 
 function getClick() {
     const xhr = new XMLHttpRequest();
@@ -60,35 +59,52 @@ function getClick() {
     let utm_content = findGetParameter("utm_content");
     let utm_term = findGetParameter("utm_term");
 
-    let query = "data1="+utm_source+"&data2="+utm_medium+"&data3="+utm_campaign+"&data4="+utm_content+"&data5="+utm_term;
+    let query = "data1=" + utm_source + "&data2=" + utm_medium + "&data3=" + utm_campaign + "&data4=" + utm_content + "&data5=" + utm_term;
     xhr.open("GET", "/api/success.php?" + query, true);
     xhr.setRequestHeader('X-Kma-Api', 'click');
     xhr.setRequestHeader('X-Referer', document.referrer);
     xhr.send();
-    xhr.onload = function() {
+    xhr.onload = function () {
         let array;
         try { array = JSON.parse(this.response); } catch (e) { return; }
         if (array.click === 'undefined') return;
         appendInputToAllForms("click", array.click);
     };
-};
+}
 
-
-(function(){
+(function () {
     window.userData = {params: {}, scroll: {}};
     window.userData.scroll.initTime = new Date();
     var fpOptions = {
         screen_resolution: true,
-        excludes: {webgl: true, canvas: true, audio: true, fonts: true, fontsFlash: true, colorDepth: true, deviceMemory: true, hardwareConcurrency: true, cpuClass: true, plugins: true, enumerateDevices: true, hasLiedLanguages: true, hasLiedResolution: true, hasLiedOs: true, hasLiedBrowser: true, webglVendorAndRenderer: true,}
+        excludes: {
+            webgl: true,
+            canvas: true,
+            audio: true,
+            fonts: true,
+            fontsFlash: true,
+            colorDepth: true,
+            deviceMemory: true,
+            hardwareConcurrency: true,
+            cpuClass: true,
+            plugins: true,
+            enumerateDevices: true,
+            hasLiedLanguages: true,
+            hasLiedResolution: true,
+            hasLiedOs: true,
+            hasLiedBrowser: true,
+            webglVendorAndRenderer: true,
+            userAgent: true,
+            language: true,
+        }
     };
-
     var sdOptions = {
         pixelDepth: false, // turn of pixelDepth event
-        eventHandler: function(data) {
+        eventHandler: function (data) {
             userData.scroll[data.eventLabel] = data.eventTiming
         },
 
-    }
+    };
     if (window.requestIdleCallback) {
         requestIdleCallback(function () {
             Fingerprint2.get(fpOptions, function (components) {
@@ -108,9 +124,11 @@ function getClick() {
     }
     gascrolldepth.init(sdOptions);
     // TODO: добавить проверку по action в форме
-    //TODO: вызов getReferrer getClick если ленд чужой
+    // TODO: вызов getReferrer getClick если ленд чужой
+    getReferrer();
+    getClick();
 
-    document.addEventListener("submit", function(event){
+    document.addEventListener("submit", function (event) {
         window.userData.scroll.totalTime = new Date() - window.userData.scroll.initTime;
         appendInputToForm(event.target, "userData", window.userData);
     });
