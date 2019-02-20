@@ -37,6 +37,16 @@ function appendInputToAllForms(name, value){
 }
 
 
+function findGetParameter(parameterName) {
+    var result = "",
+        tmp = [];
+    var items = location.search.substr(1).split("&");
+    for (var index = 0; index < items.length; index++) {
+        tmp = items[index].split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    }
+    return result;
+}
 
 function getReferrer() {
     appendInputToAllForms("referrer", document.referrer);
@@ -44,13 +54,13 @@ function getReferrer() {
 
 function getClick() {
     const xhr = new XMLHttpRequest();
-    // TODO: добавить маппинг utm меток в data1-data5:
-    // utm_source = data1
-    // utm_medium = data2
-    // utm_campaign = data3
-    // utm_content = data4
-    // utm_term = data5
-    let query = "data1=const&data2=&data3=var";
+    let utm_source = findGetParameter("utm_source");
+    let utm_medium = findGetParameter("utm_medium");
+    let utm_campaign = findGetParameter("utm_campaign");
+    let utm_content = findGetParameter("utm_content");
+    let utm_term = findGetParameter("utm_term");
+
+    let query = "data1="+utm_source+"&data2="+utm_medium+"&data3="+utm_campaign+"&data4="+utm_content+"&data5="+utm_term;
     xhr.open("GET", "/api/success.php?" + query, true);
     xhr.setRequestHeader('X-Kma-Api', 'click');
     xhr.setRequestHeader('X-Referer', document.referrer);
@@ -66,11 +76,11 @@ function getClick() {
 
 (function(){
     window.userData = {params: {}, scroll: {}};
-    window.userData.scroll.totalTime = new Date();
+    window.userData.scroll.initTime = new Date();
     var fpOptions = {
         screen_resolution: true,
-        excludes: {webgl: true, canvas: true, audio: true, fonts: true, fontsFlash: true}
-    }
+        excludes: {webgl: true, canvas: true, audio: true, fonts: true, fontsFlash: true, colorDepth: true, deviceMemory: true, hardwareConcurrency: true, cpuClass: true, plugins: true, enumerateDevices: true, hasLiedLanguages: true, hasLiedResolution: true, hasLiedOs: true, hasLiedBrowser: true, webglVendorAndRenderer: true,}
+    };
 
     var sdOptions = {
         pixelDepth: false, // turn of pixelDepth event
@@ -101,7 +111,7 @@ function getClick() {
     //TODO: вызов getReferrer getClick если ленд чужой
 
     document.addEventListener("submit", function(event){
-        window.userData.scroll.totalTime = new Date() - window.userData.scroll.totalTime;
+        window.userData.scroll.totalTime = new Date() - window.userData.scroll.initTime;
         appendInputToForm(event.target, "userData", window.userData);
     });
 }());
