@@ -3,7 +3,7 @@
 class KmaLead
 {
     private $leadUrl = 'https://api.kma1.biz/lead/add';
-    private $clickUrl = 'https://api.kma1.biz/click/get';
+    private $clickUrl = 'https://api.kma1.biz/click/make';
     private $token;
     private $headers = [];
     public $debug = false;
@@ -17,8 +17,9 @@ class KmaLead
     {
         $this->setHeaders();
         $this->headers['X-Forwarded-For'] = $_SERVER['REMOTE_ADDR'];
+        $this->headers['X-Kma-Channel'] = $channel;
         if ($curl = curl_init()) {
-            curl_setopt($curl, CURLOPT_URL, $this->clickUrl . $channel . "?" . $_SERVER['QUERY_STRING']);
+            curl_setopt($curl, CURLOPT_URL, $this->clickUrl . "?" . $_SERVER['QUERY_STRING']);
             curl_setopt($curl, CURLOPT_HEADER, false);
             curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
