@@ -3,7 +3,7 @@
 class KmaLead
 {
     private $leadUrl = 'https://api.kma1.biz/lead/add';
-    private $clickUrl = 'https://kshop5.pro/';
+    private $clickUrl = 'https://api.kma1.biz/click/get';
     private $token;
     private $headers = [];
     public $debug = false;
