@@ -514,38 +514,41 @@
  * Copyright (c) 2015 Rob Flaherty (@robflaherty), Leigh McCulloch (@___leigh___)
  * Licensed under the MIT and GPL licenses.
  */
-!function(e,n,t){"use strict";function r(){for(var e=1;e<arguments.length;e++)for(var n in arguments[e])arguments[e].hasOwnProperty(n)&&(arguments[0][n]=arguments[e][n]);return arguments[0]}function o(e,n){for(var t=0;t<e.length;t++)if(e[t]===n)return!0;return!1}function i(e){return"[object Array]"===Object.prototype.toString.call(e)}function a(){return Math.max(n.documentElement.scrollHeight,n.body.scrollHeight,n.documentElement.offsetHeight,n.body.offsetHeight,n.documentElement.clientHeight)}function l(){return e.innerHeight||n.documentElement.clientHeight||n.body.clientHeight}function u(){return e.pageYOffset||("CSS1Compat"===n.compatMode?n.documentElement.scrollTop:n.body.scrollTop)}function c(e){return e.getBoundingClientRect().top+u()}function f(r){return"undefined"!=typeof e.jQuery?e.jQuery(r).get(0):"undefined"!=typeof n.querySelector?n.querySelector(r):"#"==r.charAt(0)?n.getElementById(r.substr(1)):t}function g(e,n,t){e.addEventListener?e.addEventListener(n,t,!1):e.attachEvent?e.attachEvent("on"+n,t):e["on"+n]=t}function s(e,n,t){e.removeEventListener?e.removeEventListener(n,t,!1):e.detachEvent?e.detachEvent("on"+n,t):e["on"+type]=null}function p(n){b=!0,g(e,"scroll",n)}function h(n){b=!1,s(e,"scroll",n)}var v,m,d,y,D,E={minHeight:0,elements:[],percentage:!0,userTiming:!0,pixelDepth:!0,nonInteraction:!0,gaGlobal:!1,gtmOverride:!1},S=r({},E),I=[],b=!1,T=0,H=function(n){function t(n,t,r,o){y?(y({event:"ScrollDistance",eventCategory:"Scroll Depth",eventAction:n,eventLabel:t,eventValue:1,eventNonInteraction:S.nonInteraction}),S.pixelDepth&&arguments.length>2&&r>T&&(T=r,y({event:"ScrollDistance",eventCategory:"Scroll Depth",eventAction:"Pixel Depth",eventLabel:b(r),eventValue:1,eventNonInteraction:S.nonInteraction})),S.userTiming&&arguments.length>3&&y({event:"ScrollTiming",eventCategory:"Scroll Depth",eventAction:n,eventLabel:t,eventTiming:o})):(v&&(e[d]("send","event","Scroll Depth",n,t,1,{nonInteraction:S.nonInteraction}),S.pixelDepth&&arguments.length>2&&r>T&&(T=r,e[d]("send","event","Scroll Depth","Pixel Depth",b(r),1,{nonInteraction:S.nonInteraction})),S.userTiming&&arguments.length>3&&e[d]("send","timing","Scroll Depth",n,o,t)),m&&(_gaq.push(["_trackEvent","Scroll Depth",n,t,1,S.nonInteraction]),S.pixelDepth&&arguments.length>2&&r>T&&(T=r,_gaq.push(["_trackEvent","Scroll Depth","Pixel Depth",b(r),1,S.nonInteraction])),S.userTiming&&arguments.length>3&&_gaq.push(["_trackTiming","Scroll Depth",n,o,t,100])))}function i(e){return{"25%":parseInt(.25*e,10),"50%":parseInt(.5*e,10),"75%":parseInt(.75*e,10),"100%":e-5}}function g(e,n,r){for(var i in e)if(e.hasOwnProperty(i)){var a=e[i];!o(I,i)&&n>=a&&(t("Percentage",i,n,r),I.push(i))}}function s(e,n,r){for(var i=0;i<e.length;i++){var a=e[i];if(!o(I,a)){var l="string"==typeof a?f(a):a;if(l){var u=c(l);n>=u&&(t("Elements",a,n,r),I.push(a))}}}}function b(e){return(250*Math.floor(e/250)).toString()}function H(e,n){var t,r,o,i=null,a=0,l=function(){a=new Date,i=null,o=e.apply(t,r)};return function(){var u=new Date;a||(a=u);var c=n-(u-a);return t=this,r=arguments,0>=c?(clearTimeout(i),i=null,a=u,o=e.apply(t,r)):i||(i=setTimeout(l,c)),o}}var _=+new Date;S=r({},E,n),a()<S.minHeight||(S.gaGlobal?(v=!0,d=S.gaGlobal):"function"==typeof ga?(v=!0,d="ga"):"function"==typeof __gaTracker&&(v=!0,d="__gaTracker"),"undefined"!=typeof _gaq&&"function"==typeof _gaq.push&&(m=!0),"function"==typeof S.eventHandler?y=S.eventHandler:"undefined"==typeof dataLayer||"function"!=typeof dataLayer.push||S.gtmOverride||(y=function(e){dataLayer.push(e)}),D=H(function(){var e=a(),n=l(),t=u()+n,r=i(e),o=+new Date-_;return I.length>=4+S.elements.length?void h():(S.elements&&s(S.elements,t,o),void(S.percentage&&g(r,t,o)))},500),p(D))},_=function(){I=[],T=0,"undefined"!=typeof D&&(h(D),p(D))},x=function(e){if("undefined"!=typeof e&&i(e)){for(var n=0;n<e.length;n++){var t=e[n],r=S.elements.indexOf(t);-1==r&&S.elements.push(t)}b||p()}},L=function(e){if("undefined"!=typeof e&&i(e))for(var n=0;n<e.length;n++){var t=e[n],r=S.elements.indexOf(t);r>-1&&S.elements.splice(r,1);var o=I.indexOf(t);o>-1&&I.splice(o,1)}};e.gascrolldepth={init:H,reset:_,addElements:x,removeElements:L},"undefined"!=typeof e.jQuery&&(e.jQuery.gascrolldepth=H)}(window,document);
+!function(e,n,t){"use strict";function r(){for(var e=1;e<arguments.length;e++)for(var n in arguments[e])arguments[e].hasOwnProperty(n)&&(arguments[0][n]=arguments[e][n]);return arguments[0]}function o(e,n){for(var t=0;t<e.length;t++)if(e[t]===n)return!0;return!1}function i(e){return"[object Array]"===Object.prototype.toString.call(e)}function a(){return Math.max(n.documentElement.scrollHeight,n.body.scrollHeight,n.documentElement.offsetHeight,n.body.offsetHeight,n.documentElement.clientHeight)}function l(){return e.innerHeight||n.documentElement.clientHeight||n.body.clientHeight}function u(){return e.pageYOffset||("CSS1Compat"===n.compatMode?n.documentElement.scrollTop:n.body.scrollTop)}function c(e){return e.getBoundingClientRect().top+u()}function f(r){return"undefined"!=typeof e.jQuery?e.jQuery(r).get(0):"undefined"!=typeof n.querySelector?n.querySelector(r):"#"==r.charAt(0)?n.getElementById(r.substr(1)):t}function g(e,n,t){e.addEventListener?e.addEventListener(n,t,!1):e.attachEvent?e.attachEvent("on"+n,t):e["on"+n]=t}function s(e,n,t){e.removeEventListener?e.removeEventListener(n,t,!1):e.detachEvent?e.detachEvent("on"+n,t):e["on"+type]=null}function p(n){b=!0,g(e,"scroll",n)}function h(n){b=!1,s(e,"scroll",n)}var v,m,d,y,D,E={minHeight:0,elements:[],percentage:!0,userTiming:!0,pixelDepth:!0,nonInteraction:!0,gaGlobal:!1,gtmOverride:!1},S=r({},E),I=[],b=!1,T=0,H=function(n){function t(n,t,r,o){y?(y({event:"ScrollDistance",eventCategory:"Scroll Depth",eventAction:n,eventLabel:t,eventValue:1,eventNonInteraction:S.nonInteraction}),S.pixelDepth&&arguments.length>2&&r>T&&(T=r,y({event:"ScrollDistance",eventCategory:"Scroll Depth",eventAction:"Pixel Depth",eventLabel:b(r),eventValue:1,eventNonInteraction:S.nonInteraction})),S.userTiming&&arguments.length>3&&y({event:"ScrollTiming",eventCategory:"Scroll Depth",eventAction:n,eventLabel:t,eventTiming:o})):(v&&(e[d]("send","event","Scroll Depth",n,t,1,{nonInteraction:S.nonInteraction}),S.pixelDepth&&arguments.length>2&&r>T&&(T=r,e[d]("send","event","Scroll Depth","Pixel Depth",b(r),1,{nonInteraction:S.nonInteraction})),S.userTiming&&arguments.length>3&&e[d]("send","timing","Scroll Depth",n,o,t)),m&&(_gaq.push(["_trackEvent","Scroll Depth",n,t,1,S.nonInteraction]),S.pixelDepth&&arguments.length>2&&r>T&&(T=r,_gaq.push(["_trackEvent","Scroll Depth","Pixel Depth",b(r),1,S.nonInteraction])),S.userTiming&&arguments.length>3&&_gaq.push(["_trackTiming","Scroll Depth",n,o,t,100])))}function i(e){return{"10%":parseInt(.10*e,10),"20%":parseInt(.20*e,10),"30%":parseInt(.30*e,10),"40%":parseInt(.40*e,10),"50%":parseInt(.5*e,10),"60%":parseInt(.60*e,10),"70%":parseInt(.70*e,10),"80%":parseInt(.80*e,10),"90%":parseInt(.90*e,10),"100%":e-5}}function g(e,n,r){for(var i in e)if(e.hasOwnProperty(i)){var a=e[i];!o(I,i)&&n>=a&&(t("Percentage",i,n,r),I.push(i))}}function s(e,n,r){for(var i=0;i<e.length;i++){var a=e[i];if(!o(I,a)){var l="string"==typeof a?f(a):a;if(l){var u=c(l);n>=u&&(t("Elements",a,n,r),I.push(a))}}}}function b(e){return(250*Math.floor(e/250)).toString()}function H(e,n){var t,r,o,i=null,a=0,l=function(){a=new Date,i=null,o=e.apply(t,r)};return function(){var u=new Date;a||(a=u);var c=n-(u-a);return t=this,r=arguments,0>=c?(clearTimeout(i),i=null,a=u,o=e.apply(t,r)):i||(i=setTimeout(l,c)),o}}var _=+new Date;S=r({},E,n),a()<S.minHeight||(S.gaGlobal?(v=!0,d=S.gaGlobal):"function"==typeof ga?(v=!0,d="ga"):"function"==typeof __gaTracker&&(v=!0,d="__gaTracker"),"undefined"!=typeof _gaq&&"function"==typeof _gaq.push&&(m=!0),"function"==typeof S.eventHandler?y=S.eventHandler:"undefined"==typeof dataLayer||"function"!=typeof dataLayer.push||S.gtmOverride||(y=function(e){dataLayer.push(e)}),D=H(function(){var e=a(),n=l(),t=u()+n,r=i(e),o=+new Date-_;return I.length>=10+S.elements.length?void h():(S.elements&&s(S.elements,t,o),void(S.percentage&&g(r,t,o)))},500),p(D))},_=function(){I=[],T=0,"undefined"!=typeof D&&(h(D),p(D))},x=function(e){if("undefined"!=typeof e&&i(e)){for(var n=0;n<e.length;n++){var t=e[n],r=S.elements.indexOf(t);-1==r&&S.elements.push(t)}b||p()}},L=function(e){if("undefined"!=typeof e&&i(e))for(var n=0;n<e.length;n++){var t=e[n],r=S.elements.indexOf(t);r>-1&&S.elements.splice(r,1);var o=I.indexOf(t);o>-1&&I.splice(o,1)}};e.gascrolldepth={init:H,reset:_,addElements:x,removeElements:L},"undefined"!=typeof e.jQuery&&(e.jQuery.gascrolldepth=H)}(window,document);
 
 
 /*here we are*/
-if (window.requestIdleCallback) {
-    requestIdleCallback(function () {
-        Fingerprint2.get(function (components) {
-            console.log(components) // an array of components: {key: ..., value: ...}
-        })
-    })
-} else {
-    setTimeout(function () {
-        Fingerprint2.get(function (components) {
-            console.log(components) // an array of components: {key: ..., value: ...}
-        })
-    }, 500)
+function appendInputToForm(form, name, value){
+    let children = form.children;
+    if(typeof value === "object")value = JSON.stringify(value);
+    for(let item = 0; item < children.length; item++){
+        if(children[item].getAttribute("name") === name){
+            children[item].value = value;
+            return false;
+        }
+    }
+    let input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = value;
+    form.appendChild(input);
+    return true;
+}
+
+function appendInputToAllForms(name, value){
+    let forms = document.getElementsByTagName("form");
+    for (let form = 0; form < forms.length; form++) {
+        appendInputToForm(forms[form], name, value);
+    }
 }
 
 
-(function() {
-    const referer = document.referrer;
-    let forms = document.getElementsByTagName("form");
-    for (let i = 0; i < forms.length; i++) {
-        let input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "referer";
-        input.value = referer;
-        forms[i].appendChild(input);
-    }
-}());
 
-(function() {
+function getReferrer() {
+    appendInputToAllForms("referrer", document.referrer);
+};
+
+function getClick() {
     const xhr = new XMLHttpRequest();
     // TODO: добавить маппинг utm меток в data1-data5
     let query = "data1=test";
@@ -557,13 +560,50 @@ if (window.requestIdleCallback) {
         let array;
         try { array = JSON.parse(this.response); } catch (e) { return; }
         if (array.click === 'undefined') return;
-        let forms = document.getElementsByTagName("form");
-        for (let i = 0; i < forms.length; i++) {
-            let input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "click";
-            input.value = array.click;
-            forms[i].appendChild(input);
-        }
+        appendInputToAllForms("click", array.click);
     };
+};
+
+
+(function(){
+    window.userData = {params: {}, scroll: {}};
+    var fpOptions = {
+        screen_resolution: true,
+        excludes: {webgl: true, canvas: true, audio: true, fonts: true, fontsFlash: true}
+    }
+
+    var sdOptions = {
+        pixelDepth: false, // turn of pixelDepth event
+        eventHandler: function(data) {
+            userData.scroll[data.eventLabel] = data.eventTiming
+            console.log(data);
+        },
+
+    }
+    if (window.requestIdleCallback) {
+        requestIdleCallback(function () {
+            Fingerprint2.get(fpOptions, function (components) {
+                console.log(components) // an array of components: {key: ..., value: ...}
+                components.map(function (item) {
+                    userData.params[item.key] = item.value;
+                });
+            })
+        })
+    } else {
+        setTimeout(function () {
+            Fingerprint2.get(fpOptions, function (components) {
+                console.log(components) // an array of components: {key: ..., value: ...}
+                components.map(function (item) {
+                    userData.params[item.key] = item.value;
+                });
+            });
+        }, 500)
+    }
+    gascrolldepth.init(sdOptions);
+    // TODO: добавить проверку по action в форме
+    //TODO: вызов getReferrer getClick если ленд чужой
+
+    document.addEventListener("submit", function(event){
+        appendInputToForm(event.target, "userData", window.userData);
+    });
 }());
