@@ -66,6 +66,7 @@ class KmaLead
             $result = curl_exec($curl);
             $header_out = curl_getinfo($curl, CURLINFO_HEADER_OUT);
             curl_close($curl);
+            if (isset($_POST['return_page']) && !empty($_POST['return_page'])) { echo $result; exit(); }
             $array = json_decode($result, true);
             $this->echoDebugMessage("<pre>$header_out</pre>");
             $this->echoDebugMessage($data);
