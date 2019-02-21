@@ -41,6 +41,9 @@
     }
 
     function getClick() {
+        if (sessionStorage.getItem('kma-click')) {
+            return appendInputToAllForms("click", sessionStorage.getItem('kma-click'));
+        }
         const xhr = new XMLHttpRequest();
         let utm_source = findGetParameter("utm_source");
         let utm_medium = findGetParameter("utm_medium");
@@ -57,6 +60,7 @@
             let array;
             try { array = JSON.parse(this.response); } catch (e) { return; }
             if (array.click === 'undefined') return;
+            sessionStorage.setItem('kma-click', array.click);
             appendInputToAllForms("click", array.click);
         };
     }
