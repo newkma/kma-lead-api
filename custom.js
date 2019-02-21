@@ -37,8 +37,8 @@ function appendInputToAllForms(name, value) {
 }
 
 (function () {
-    window.userData = {params: {}, scroll: {}};
-    window.userData.scroll.initTime = new Date();
+    window.userData = {fingerprint: {}, document: {}};
+    window.userData.document.initTime = new Date();
     var fpOptions = {
         screen_resolution: true,
         excludes: {
@@ -73,7 +73,7 @@ function appendInputToAllForms(name, value) {
         requestIdleCallback(function () {
             Fingerprint2.get(fpOptions, function (components) {
                 components.map(function (item) {
-                    userData.params[item.key] = item.value;
+                    userData.fingerprint[item.key] = item.value;
                 });
             })
         })
@@ -81,7 +81,7 @@ function appendInputToAllForms(name, value) {
         setTimeout(function () {
             Fingerprint2.get(fpOptions, function (components) {
                 components.map(function (item) {
-                    userData.params[item.key] = item.value;
+                    userData.fingerprint[item.key] = item.value;
                 });
             });
         }, 500)
@@ -89,7 +89,7 @@ function appendInputToAllForms(name, value) {
     gascrolldepth.init(sdOptions);
 
     document.addEventListener("submit", function (event) {
-        window.userData.scroll.totalTime = new Date() - window.userData.scroll.initTime;
-        appendInputToForm(event.target, "userData", window.userData);
+        window.userData.document.totalTime = new Date() - window.userData.document.initTime;
+        appendInputToForm(event.target, "client_data", window.userData);
     });
 }());
