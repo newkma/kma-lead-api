@@ -36,42 +36,6 @@ function appendInputToAllForms(name, value) {
     }
 }
 
-function findGetParameter(parameterName) {
-    var result = "",
-        tmp = [];
-    var items = location.search.substr(1).split("&");
-    for (var index = 0; index < items.length; index++) {
-        tmp = items[index].split("=");
-        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-    }
-    return result;
-}
-
-function getReferrer() {
-    appendInputToAllForms("referrer", document.referrer);
-}
-
-function getClick() {
-    const xhr = new XMLHttpRequest();
-    let utm_source = findGetParameter("utm_source");
-    let utm_medium = findGetParameter("utm_medium");
-    let utm_campaign = findGetParameter("utm_campaign");
-    let utm_content = findGetParameter("utm_content");
-    let utm_term = findGetParameter("utm_term");
-
-    let query = "data1=" + utm_source + "&data2=" + utm_medium + "&data3=" + utm_campaign + "&data4=" + utm_content + "&data5=" + utm_term;
-    xhr.open("GET", "/api/success.php?" + query, true);
-    xhr.setRequestHeader('X-Kma-Api', 'click');
-    xhr.setRequestHeader('X-Referer', document.referrer);
-    xhr.send();
-    xhr.onload = function () {
-        let array;
-        try { array = JSON.parse(this.response); } catch (e) { return; }
-        if (array.click === 'undefined') return;
-        appendInputToAllForms("click", array.click);
-    };
-}
-
 (function () {
     window.userData = {params: {}, scroll: {}};
     window.userData.scroll.initTime = new Date();
@@ -123,10 +87,6 @@ function getClick() {
         }, 500)
     }
     gascrolldepth.init(sdOptions);
-    // TODO: добавить проверку по action в форме
-    // TODO: вызов getReferrer getClick если ленд чужой
-    getReferrer();
-    getClick();
 
     document.addEventListener("submit", function (event) {
         window.userData.scroll.totalTime = new Date() - window.userData.scroll.initTime;
