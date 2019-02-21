@@ -31,15 +31,25 @@ class KmaLead
         return "{}";
     }
 
-    public function sendLead($data)
+    public function sendLead($data, $render = false)
     {
-        $result = $this->send($data);
-        return (!empty($result) && isset($result['id'])) ? $result['id'] : false;
+        $result = $this->send($data, $render);
+        if ($render) {
+            return $result;
+        } else {
+            return (!empty($result) && isset($result['id'])) ? $result['id'] : false;
+        }
     }
 
-    private function send($data)
+    private function send($data, $render)
     {
-        $array = $this->sendRequest($data);
+        $result = $this->sendRequest($data);
+        $this->echoDebugMessage($data);
+        if ($render) {
+            return $result;
+        }
+        $array = json_decode($result, true);
+        $this->echoDebugMessage($array);
         if (empty($array)) {
             return false;
         }
@@ -66,12 +76,8 @@ class KmaLead
             $result = curl_exec($curl);
             $header_out = curl_getinfo($curl, CURLINFO_HEADER_OUT);
             curl_close($curl);
-            if (isset($_POST['return_page']) && !empty($_POST['return_page'])) { echo $result; exit(); }
-            $array = json_decode($result, true);
             $this->echoDebugMessage("<pre>$header_out</pre>");
-            $this->echoDebugMessage($data);
-            $this->echoDebugMessage($array);
-            return $array;
+            return $result;
         }
         return false;
     }

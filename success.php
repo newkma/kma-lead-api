@@ -13,7 +13,7 @@ $data = [
     'ip' => $_SERVER['REMOTE_ADDR'],
 ];
 
-foreach (['name', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'click', 'referer'] as $item) {
+foreach (['name', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'click', 'referer', 'return_page'] as $item) {
     if (isset($_POST[$item]) && !empty($_POST[$item])) {
         $data[$item] = $_POST[$item];
     }
@@ -34,7 +34,12 @@ if (isset($_SERVER['HTTP_X_KMA_API']) && $_SERVER['HTTP_X_KMA_API'] === 'click')
 $kma->debug = true;
 
 // отправка лида
-$order = $kma->sendLead($data);
+if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
+    echo $kma->sendLead($data, true);
+    exit();
+} else {
+    $order = $kma->sendLead($data);
+}
 
 if (empty($order)) {
     include_once 'tpl_error.php'; // ошибка
