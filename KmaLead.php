@@ -8,11 +8,18 @@ class KmaLead
     private $headers = [];
     public $debug = false;
 
+    /**
+     * @param string $token
+     */
     public function __construct($token = '')
     {
         $this->token = $token;
     }
 
+    /**
+     * @param string $channel
+     * @return bool|string
+     */
     public function getClick($channel)
     {
         $this->setHeaders();
@@ -31,6 +38,11 @@ class KmaLead
         return "{}";
     }
 
+    /**
+     * @param $data
+     * @param bool $render
+     * @return bool|string
+     */
     public function sendLead($data, $render = false)
     {
         $result = $this->send($data, $render);
@@ -41,6 +53,11 @@ class KmaLead
         }
     }
 
+    /**
+     * @param array $data
+     * @param bool $render
+     * @return bool|string|array
+     */
     private function send($data, $render)
     {
         $result = $this->sendRequest($data);
@@ -61,6 +78,10 @@ class KmaLead
         }
     }
 
+    /**
+     * @param array $data
+     * @return bool|string
+     */
     private function sendRequest($data)
     {
         $this->setHeaders();
@@ -82,6 +103,9 @@ class KmaLead
         return false;
     }
 
+    /**
+     * @return array
+     */
     private function getHeaders()
     {
         array_walk($this->headers, function (&$value, $key) {
