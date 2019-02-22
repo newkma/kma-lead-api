@@ -39,6 +39,8 @@ if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
     exit();
 } else {
     $order = $kma->sendLead($data);
+    $name = $data['name'];
+    $phone = $data['phone'];
 }
 
 if (empty($order)) {
