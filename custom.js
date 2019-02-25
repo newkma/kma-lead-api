@@ -65,7 +65,7 @@ function appendInputToAllForms(name, value) {
     var sdOptions = {
         pixelDepth: false, // turn of pixelDepth event
         eventHandler: function (data) {
-            userData.scroll[data.eventLabel] = data.eventTiming
+            window.userData.scroll[data.eventLabel] = data.eventTiming
         },
 
     };
@@ -73,7 +73,7 @@ function appendInputToAllForms(name, value) {
         requestIdleCallback(function () {
             Fingerprint2.get(fpOptions, function (components) {
                 components.map(function (item) {
-                    userData.fingerprint[item.key] = item.value;
+                    window.userData.fingerprint[item.key] = item.value;
                 });
             })
         })
@@ -81,7 +81,7 @@ function appendInputToAllForms(name, value) {
         setTimeout(function () {
             Fingerprint2.get(fpOptions, function (components) {
                 components.map(function (item) {
-                    userData.fingerprint[item.key] = item.value;
+                    window.userData.fingerprint[item.key] = item.value;
                 });
             });
         }, 500)
