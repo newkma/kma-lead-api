@@ -37,7 +37,7 @@
     }
 
     function getReferrer() {
-        appendInputToAllForms("referrer", document.referrer);
+        appendInputToAllForms("referer", document.referrer);
     }
 
     function getClick() {
