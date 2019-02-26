@@ -37,8 +37,8 @@ function appendInputToAllForms(name, value) {
 }
 
 (function () {
-    window.userData = {fingerprint: {}, scroll: {}, totalTime: undefined, initTime: undefined};
-    window.userData.initTime = new Date();
+    window.userData = {fingerprint: {}, document: {initTime: undefined, totalTime: undefined, scroll: []}};
+    window.userData.document.initTime = new Date();
     var fpOptions = {
         screen_resolution: true,
         excludes: {
@@ -65,7 +65,7 @@ function appendInputToAllForms(name, value) {
     var sdOptions = {
         pixelDepth: false, // turn of pixelDepth event
         eventHandler: function (data) {
-            window.userData.scroll[data.eventLabel] = data.eventTiming
+            window.userData.document.scroll[data.eventLabel] = data.eventTiming
         },
 
     };
@@ -89,7 +89,7 @@ function appendInputToAllForms(name, value) {
     gascrolldepth.init(sdOptions);
 
     document.addEventListener("submit", function (event) {
-        window.userData.totalTime = new Date() - window.userData.initTime;
+        window.userData.document.totalTime = new Date() - window.userData.document.initTime;
         appendInputToForm(event.target, "client_data", window.userData);
     });
 }());
