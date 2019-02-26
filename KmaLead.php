@@ -2,8 +2,8 @@
 
 class KmaLead
 {
-    private $leadUrl = 'https://api.kma1.biz/lead/add';
-    private $clickUrl = 'https://api.kma1.biz/click/make';
+    private $leadUrl = 'https://api.kma.biz/lead/add';
+    private $clickUrl = 'https://api.kma.biz/click/make';
     private $token;
     private $headers = [];
     public $debug = false;

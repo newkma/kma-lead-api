@@ -36,36 +36,37 @@
         return result;
     }
 
-    function getReferrer() {
-        appendInputToAllForms("referer", document.referrer);
+    function appendReferrer() {
+        if (!!document.referrer) appendInputToAllForms("referer", document.referrer);
     }
 
-    function getClick() {
-        if (sessionStorage.getItem('kma-click')) {
+    function appendClick() {
+        if (!!sessionStorage.getItem('kma-click')) {
             return appendInputToAllForms("click", sessionStorage.getItem('kma-click'));
         }
-        const xhr = new XMLHttpRequest();
         let utm_source = findGetParameter("utm_source");
         let utm_medium = findGetParameter("utm_medium");
         let utm_campaign = findGetParameter("utm_campaign");
         let utm_content = findGetParameter("utm_content");
         let utm_term = findGetParameter("utm_term");
-
         let query = "data1=" + utm_source + "&data2=" + utm_medium + "&data3=" + utm_campaign + "&data4=" + utm_content + "&data5=" + utm_term;
+
+        const xhr = new XMLHttpRequest();
         xhr.open("GET", "/api/success.php?" + query, true);
         xhr.setRequestHeader('X-Kma-Api', 'click');
-        xhr.setRequestHeader('X-Referer', document.referrer);
+        if (!!document.referrer) xhr.setRequestHeader('X-Referer', document.referrer);
         xhr.send();
         xhr.onload = function () {
             let array;
             try { array = JSON.parse(this.response); } catch (e) { return; }
-            if (array.click === 'undefined') return;
+            console.log(array.click);
+            if (array.click === undefined) return;
             sessionStorage.setItem('kma-click', array.click);
             appendInputToAllForms("click", array.click);
         };
     }
 
-    getReferrer();
-    getClick();
+    appendReferrer();
+    appendClick();
 
 }());
