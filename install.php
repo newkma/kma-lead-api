@@ -31,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $file = fopen('config.php', 'w');
             fwrite($file, $output);
             fclose($file);
+            echo 'CONFIG SAVED';
+            exit();
         } else {
             $message = 'API ключ или поток не могут принимать данные значения';
         }
