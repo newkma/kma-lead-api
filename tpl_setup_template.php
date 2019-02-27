@@ -88,7 +88,12 @@
 						</tbody>
 					</table>
 				</div>
-				<p>4. Заполнение полей токена и потока и запись их в файл</p>
+				<p>4. Введите значения Вашего токена и потока</p>
+                <form class="horizontal-form">
+                    <input class="form-input" type="text" name="token" placeholder="Token"/>
+                    <input class="form-input" type="text" name="channel" placeholder="Поток"/>
+                    <button class="form-button" type="submit">Сохранить</button>
+                </form>
 			</div>
 			 
 		</main>
