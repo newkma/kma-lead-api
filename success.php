@@ -1,12 +1,18 @@
 <?php
 
-// удалить или закомменитировать эти 2 строки при отладке
-error_reporting(0);
-ini_set('display_errors', 0);
+if (is_file('config.php')) {
+    require_once 'config.php';
+}
 
-// настройки
-$token = 'xxx'; // access token
-$channel = 'xxx'; // channel
+$debug = defined('KMA_DEBUG') ? KMA_DEBUG : false;
+
+if ($debug) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+}
+
+$token = defined('KMA_ACCESS_TOKEN') ? KMA_ACCESS_TOKEN : 'access token';
+$channel = defined('KMA_CHANNEL') ? KMA_CHANNEL : 'channel';
 
 $data = [
     'channel' => $channel,
@@ -19,7 +25,6 @@ foreach (['name', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'click',
     }
 }
 
-// класс для отправки лида в КМА
 require_once 'KmaLead.php';
 
 /** @var KmaLead $kma */
@@ -30,10 +35,8 @@ if (isset($_SERVER['HTTP_X_KMA_API']) && $_SERVER['HTTP_X_KMA_API'] === 'click')
     exit();
 }
 
-// включить вывод ошибок
-$kma->debug = true;
+$kma->debug = $debug;
 
-// отправка лида
 if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
     echo $kma->sendLead($data, true);
     exit();
