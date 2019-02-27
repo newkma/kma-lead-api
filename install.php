@@ -17,7 +17,7 @@ if (!empty($check)) {
 }
 
 if (is_file('config.php')) {
-    $exit = (isset($_GET['action']) && $_GET['action'] === 'done') ? 'CONFIG SAVED' : 'CONFIG EXIST';
+    $exit = (isset($_GET['action']) && $_GET['action'] === 'done') ? 'Конфигурация успешно сохранена' : 'Конфигурация уже существует';
     exit($exit);
 }
 
