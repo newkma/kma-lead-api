@@ -47,9 +47,9 @@ if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
 }
 
 if (empty($order)) {
-    include_once 'tpl_error.php'; // ошибка
+    include_once 'tpl_error.php';
 } else {
-    include_once 'tpl_success.php'; // успех
+    include_once 'tpl_success.php';
 }
 
 exit();
