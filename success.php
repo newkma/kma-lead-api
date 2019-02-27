@@ -2,6 +2,8 @@
 
 if (is_file('config.php')) {
     require_once 'config.php';
+} else {
+    exit('CONFIG FILE NOT EXIST');
 }
 
 $token = defined('KMA_ACCESS_TOKEN') ? KMA_ACCESS_TOKEN : 'access token';
