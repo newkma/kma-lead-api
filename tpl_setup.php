@@ -6,16 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700&amp;subset=cyrillic" rel="stylesheet">
 	<link rel="stylesheet" href="css_setup/style.css">
-      
 </head>
 <body>
 	<div class="wrap">
-		 
 		<main class="main-content">
 			<h1 class="main-content__title">УСТАНОВКА</h1>
-			                
             <div class="main-content__description">Пожалуйста, выполните все шаги, и удостовертесь, что все проверки выполнены успешно</div>
-			
 			<div class="steps">
 				<p>1. Убедитесь, что перечисленные ниже расширения установлены:</p>
 				<div class="table-responsive">
@@ -59,15 +55,10 @@
                 </form>
                 <? endif; ?>
 			</div>
-
             <?php if ($inputDataValid === false) : ?>
                 <div><?= $inputErrorMsg ?></div>
             <?php endif; ?>
-			 
 		</main>
- 
-		 
 	</div>
- 
 </body>
 </html>
