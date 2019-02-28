@@ -6,11 +6,11 @@ if (is_file('config.php')) {
     exit();
 }
 
-$fileTest = fopen('test_create.tmp', 'w');
+$testFile = fopen('test_create.tmp', 'w');
 $checkReq = [
     'php' => phpversion() >= '5.4',
     'curl' => extension_loaded('curl'),
-    'file_create' => is_resource($fileTest),
+    'file_create' => is_resource($testFile) && fwrite($testFile, 'test') && fclose($testFile),
 ];
 @unlink('test_create.tmp');
 $allReqOk = !in_array(false, $checkReq);
