@@ -15,7 +15,10 @@ if (is_file('config.php')) {
 
 $valid = true;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['token']) && !empty($token = $_POST['token']) && isset($_POST['channel']) && !empty($channel = $_POST['channel'])) {
+    if (
+        isset($_POST['token']) && !empty($token = $_POST['token']) &&
+        isset($_POST['channel']) && !empty($channel = $_POST['channel'])
+    ) {
         if (preg_match('/^[\w-]{32}$/', $token) && preg_match('/^\w{6}$/', $channel)) {
             $output  = "<?php" . PHP_EOL . PHP_EOL;
             $output .= "define('KMA_ACCESS_TOKEN', '$token');" . PHP_EOL;
