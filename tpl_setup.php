@@ -33,24 +33,24 @@
 								<td>Версия PHP</td>
 								<td><?= phpversion() ?></td>
 								<td>5.4.0</td>
-								<td><i class="<?= $check['php'] ? 'success' : 'reject' ?>"></i></td>
+								<td><i class="<?= $checkReq['php'] ? 'success' : 'reject' ?>"></i></td>
 							</tr>
 							<tr>
 								<td>cURL</td>
-								<td><?= $check['php'] ? 'Подключено' : 'Не подключено' ?></td>
+								<td><?= $checkReq['php'] ? 'Подключено' : 'Не подключено' ?></td>
 								<td>Подключено</td>
-								<td><i class="<?= $check['curl'] ? 'success' : 'reject' ?>"></i></td>
+								<td><i class="<?= $checkReq['curl'] ? 'success' : 'reject' ?>"></i></td>
 							</tr>
 							<tr>
 								<td>Создание файлов</td>
-								<td><?= $check['file_create'] ? 'Возможно' : 'Невозможно' ?></td>
+								<td><?= $checkReq['file_create'] ? 'Возможно' : 'Невозможно' ?></td>
 								<td>Возможно</td>
-								<td><i class="<?= $check['file_create'] ? 'success' : 'reject' ?>"></i></td>
+								<td><i class="<?= $checkReq['file_create'] ? 'success' : 'reject' ?>"></i></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-                <?php if ($ok) : ?>
+                <?php if ($allReqOk) : ?>
 				<p>2. Введите значения Вашего токена и потока</p>
                 <form class="horizontal-form" action="install.php" method="POST">
                     <input class="form-input" type="text" name="token" placeholder="Token"/>
@@ -60,8 +60,8 @@
                 <? endif; ?>
 			</div>
 
-            <?php if ($valid === false) : ?>
-                <div><?= $message ?></div>
+            <?php if ($inputDataValid === false) : ?>
+                <div><?= $inputErrorMsg ?></div>
             <?php endif; ?>
 			 
 		</main>

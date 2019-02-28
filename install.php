@@ -1,19 +1,23 @@
 <?php
 
-$check = [
+$fileTest = fopen('test_create.tmp', 'w');
+
+$checkReq = [
     'php' => phpversion() >= '5.4',
     'curl' => extension_loaded('curl'),
-    'file_create' => is_writable('install.php'),
+    'file_create' => is_resource($fileTest),
 ];
 
-$ok = !in_array(false, $check);
+@unlink('test_create.tmp');
+
+$allReqOk = !in_array(false, $checkReq);
 
 if (is_file('config.php')) {
-    $exit = (isset($_GET['action']) && $_GET['action'] === 'done') ? 'Конфигурация успешно сохранена' : 'Конфигурация уже существует';
-    exit($exit);
+    $exitMsg = (isset($_GET['action']) && $_GET['action'] === 'done') ? 'Конфигурация успешно сохранена' : 'Конфигурация уже существует';
+    exit($exitMsg);
 }
 
-$valid = true;
+$inputDataValid = true;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (
         isset($_POST['token']) && !empty($token = $_POST['token']) &&
@@ -30,12 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: install.php?action=done');
             exit();
         } else {
-            $valid = false;
-            $message = 'API ключ или поток не могут принимать данные значения';
+            $inputDataValid = false;
+            $inputErrorMsg = 'API ключ или поток не могут принимать данные значения';
         }
     } else {
-        $valid = false;
-        $message = 'API ключ и поток не могут быть пустыми';
+        $inputDataValid = false;
+        $inputErrorMsg = 'API ключ и поток не могут быть пустыми';
     }
 }
 
