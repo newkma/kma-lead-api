@@ -16,14 +16,11 @@ $checkReq = [
 $allReqOk = !in_array(false, $checkReq);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (
-        isset($_POST['token']) && !empty($token = $_POST['token']) &&
-        isset($_POST['channel']) && !empty($channel = $_POST['channel'])
-    ) {
-        if (preg_match('/^[\w-]{32}$/', $token) && preg_match('/^\w{6}$/', $channel)) {
+    if (isset($_POST['token']) && isset($_POST['channel'])) {
+        if (preg_match('/^[\w-]{32}$/', $_POST['token']) && preg_match('/^\w{6}$/', $_POST['channel'])) {
             $output  = "<?php" . PHP_EOL . PHP_EOL;
-            $output .= "define('KMA_ACCESS_TOKEN', '$token');" . PHP_EOL;
-            $output .= "define('KMA_CHANNEL', '$channel');" . PHP_EOL;
+            $output .= "define('KMA_ACCESS_TOKEN', '{$_POST['token']}');" . PHP_EOL;
+            $output .= "define('KMA_CHANNEL', '{$_POST['channel']}');" . PHP_EOL;
             $output .= "define('KMA_DEBUG', false);" . PHP_EOL;
             $file = fopen('config.php', 'w');
             fwrite($file, $output);
@@ -33,8 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $inputErrorMsg = 'API ключ или поток не могут принимать данные значения';
         }
-    } else {
-        $inputErrorMsg = 'API ключ и поток не могут быть пустыми';
     }
 }
 
