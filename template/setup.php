@@ -52,7 +52,7 @@
                 </div>
                 <?php if ($allReqOk) : ?>
                     <p>2. Введите значения Вашего токена и потока</p>
-                    <form class="horizontal-form" action="../install.php" method="POST">
+                    <form class="horizontal-form" action="install.php" method="POST">
                         <input class="form-input" type="text" name="token" placeholder="Token" required/>
                         <input class="form-input" type="text" name="channel" placeholder="Поток" required/>
                         <button class="form-button" type="submit">Сохранить</button>
