@@ -2,7 +2,7 @@
 
 if (is_file('config.php')) {
     $successMsg = (isset($_GET['action']) && $_GET['action'] === 'done') ? 'Конфигурация успешно сохранена' : 'Конфигурация уже существует';
-    include_once 'tpl_setup.php';
+    include_once 'template/setup.php';
     exit();
 }
 
@@ -30,5 +30,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-include_once 'tpl_setup.php';
+include_once 'template/setup.php';
 exit();

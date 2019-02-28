@@ -141,14 +141,14 @@ table i.success{
 	display: inline-block;
 	width: 20px;
 	height: 20px;
-	background: url('./check.svg') no-repeat center center;
+	background: url('check.svg') no-repeat center center;
 	background-size: cover;
 }
 table i.reject{
 	display: inline-block;
 	width: 20px;
 	height: 20px;
-	background: url('./ban.svg') no-repeat center center;
+	background: url('ban.svg') no-repeat center center;
 	background-size: cover;
 }
 table i+span{

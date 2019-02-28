@@ -5,7 +5,7 @@
     <title>Спасибо!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700&amp;subset=cyrillic" rel="stylesheet">
-    <link rel="stylesheet" href="css_success/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="img/apple-icon-72x72.png">
@@ -88,7 +88,7 @@
         </div>
     </footer>
 </div>
-<script src="success_files/tpl-newdefault/js/jquery-2.2.4.min.js"></script>
+<script src="js/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("form.main-form").on("submit", function () {

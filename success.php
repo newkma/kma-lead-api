@@ -50,9 +50,9 @@ if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
 }
 
 if (empty($order)) {
-    include_once 'tpl_error.php';
+    include_once 'template/error.php';
 } else {
-    include_once 'tpl_success.php';
+    include_once 'template/success.php';
 }
 
 exit();

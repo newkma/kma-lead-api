@@ -5,7 +5,7 @@
     <title>Установка</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700&amp;subset=cyrillic" rel="stylesheet">
-    <link rel="stylesheet" href="css_setup/style.css">
+    <link rel="stylesheet" href="css/setup/style.css">
 </head>
 <body>
 <div class="wrap">
@@ -52,7 +52,7 @@
                 </div>
                 <?php if ($allReqOk) : ?>
                     <p>2. Введите значения Вашего токена и потока</p>
-                    <form class="horizontal-form" action="install.php" method="POST">
+                    <form class="horizontal-form" action="../install.php" method="POST">
                         <input class="form-input" type="text" name="token" placeholder="Token" required/>
                         <input class="form-input" type="text" name="channel" placeholder="Поток" required/>
                         <button class="form-button" type="submit">Сохранить</button>
