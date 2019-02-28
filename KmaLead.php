@@ -116,7 +116,7 @@ class KmaLead
 
     private function setHeaders()
     {
-         foreach ($_SERVER as $name => $value) {
+        foreach ($_SERVER as $name => $value) {
             if (substr($name, 0, 5) == 'HTTP_') {
                 $this->headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
             }
@@ -146,7 +146,9 @@ class KmaLead
     {
         if ($this->debug) {
             if (is_array($data)) {
-                echo '<pre>'; print_r($data); echo '</pre>';
+                echo '<pre>';
+                print_r($data);
+                echo '</pre>';
             } else {
                 echo "<br> $data <br>";
             }
