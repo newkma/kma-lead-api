@@ -6,11 +6,10 @@ if (is_file('config.php')) {
     exit();
 }
 
-$testFile = fopen('test_create.tmp', 'w');
 $checkReq = [
     'php' => phpversion() >= '5.4',
     'curl' => extension_loaded('curl'),
-    'file_create' => is_resource($testFile) && fwrite($testFile, 'test') && fclose($testFile),
+    'file_create' => (bool)file_put_contents('test_create.tmp', 'test'),
 ];
 @unlink('test_create.tmp');
 $allReqOk = !in_array(false, $checkReq);
@@ -22,9 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $output .= "define('KMA_ACCESS_TOKEN', '{$_POST['token']}');" . PHP_EOL;
             $output .= "define('KMA_CHANNEL', '{$_POST['channel']}');" . PHP_EOL;
             $output .= "define('KMA_DEBUG', false);" . PHP_EOL;
-            $file = fopen('config.php', 'w');
-            fwrite($file, $output);
-            fclose($file);
+            file_put_contents('config.php', $output);
             header('Location: install.php?action=done');
             exit();
         } else {
