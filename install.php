@@ -1,20 +1,12 @@
 <?php
 
-$check = [];
-if (phpversion() < '5.4') {
-    $check[] = 'Версия PHP должна быть >5.4 для работы скриптов API';
-}
-if (!extension_loaded('curl')) {
-    $check[] = 'Расширение CURL должно быть загружено для работы по API';
-}
-if (!is_writable('install.php')) {
-    $check[] = 'Сервер не позволяет записывать файлы';
-}
-if (!empty($check)) {
-    echo "<p>Для работы API необходимо устранить следующие проблемы:</p>";
-    echo "<pre>"; echo var_export($check, true); echo "</pre>";
-    exit();
-}
+$check = [
+    'php' => phpversion() >= '5.4',
+    'curl' => extension_loaded('curl'),
+    'file_create' => is_writable('install.php'),
+];
+
+$ok = !in_array(false, $check);
 
 if (is_file('config.php')) {
     $exit = (isset($_GET['action']) && $_GET['action'] === 'done') ? 'Конфигурация успешно сохранена' : 'Конфигурация уже существует';
