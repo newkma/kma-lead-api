@@ -23,7 +23,9 @@ $kma = new KmaLead($token);
 if (isset($_SERVER['HTTP_X_KMA_API']) && $_SERVER['HTTP_X_KMA_API'] === 'click') {
     echo $kma->getClick($channel);
     exit();
-} elseif ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
