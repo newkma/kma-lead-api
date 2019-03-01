@@ -41,10 +41,10 @@ foreach (['name', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'click',
 $kma->debug = $debug;
 
 if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
-    echo $kma->sendLead($data, true);
+    echo $kma->addLeadAndReturnPage($data);
     exit();
 } else {
-    $order = $kma->sendLead($data);
+    $order = $kma->addLead($data);
     $name = $data['name'];
     $phone = $data['phone'];
 }
