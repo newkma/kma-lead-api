@@ -6,11 +6,11 @@ if (is_file('config.php')) {
     exit();
 }
 
-$checkReq = [
+$checkReq = array(
     'php' => phpversion() >= '5.4',
     'curl' => extension_loaded('curl'),
     'file_create' => (bool)file_put_contents('test_create.tmp', 'test'),
-];
+);
 @unlink('test_create.tmp');
 $allReqOk = !in_array(false, $checkReq);
 
