@@ -32,7 +32,7 @@
                         <tr>
                             <td>Версия PHP</td>
                             <td><?= phpversion() ?></td>
-                            <td>>= 5.4.0</td>
+                            <td>5.4.0 и выше</td>
                             <td><i class="<?= $checkReq['php'] ? 'success' : 'reject' ?>"></i></td>
                         </tr>
                         <tr>
