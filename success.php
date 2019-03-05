@@ -23,7 +23,9 @@ $kma = new KmaLead($token);
 if (isset($_SERVER['HTTP_X_KMA_API']) && $_SERVER['HTTP_X_KMA_API'] === 'click') {
     echo $kma->getClick($channel);
     exit();
-} elseif ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
@@ -41,18 +43,18 @@ foreach (['name', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'click',
 $kma->debug = $debug;
 
 if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
-    echo $kma->sendLead($data, true);
+    echo $kma->addLeadAndReturnPage($data);
     exit();
 } else {
-    $order = $kma->sendLead($data);
+    $order = $kma->addLead($data);
     $name = $data['name'];
     $phone = $data['phone'];
 }
 
 if (empty($order)) {
-    include_once 'tpl_error.php';
+    include_once 'template/error.php';
 } else {
-    include_once 'tpl_success.php';
+    include_once 'template/success.php';
 }
 
 exit();
