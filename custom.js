@@ -37,7 +37,7 @@ function appendInputToAllForms(name, value) {
 }
 
 (function () {
-    window.userData = {fingerprint: {}, document: {initTime: undefined, totalTime: undefined, scroll: []}};
+    window.userData = {fingerprint: {}, document: {initTime: undefined, totalTime: undefined, scroll: {}}};
     window.userData.document.initTime = new Date();
     var fpOptions = {
         screen_resolution: true,
