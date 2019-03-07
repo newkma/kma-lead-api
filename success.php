@@ -34,7 +34,7 @@ $data = [
     'ip' => $_SERVER['REMOTE_ADDR'],
 ];
 
-foreach (['name', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'click', 'referer', 'return_page'] as $item) {
+foreach (['name', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'click', 'referer', 'return_page', 'client_data'] as $item) {
     if (isset($_POST[$item]) && !empty($_POST[$item])) {
         $data[$item] = $_POST[$item];
     }
