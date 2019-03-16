@@ -57,7 +57,7 @@
                         <input class="form-input" type="text" name="channel" placeholder="Поток" required/>
                         <button class="form-button" type="submit">Сохранить</button>
                     </form>
-                <? endif; ?>
+                <?php endif; ?>
             </div>
             <?php if (isset($inputErrorMsg)) : ?>
                 <div><?= $inputErrorMsg ?></div>
