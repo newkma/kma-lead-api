@@ -12,7 +12,7 @@
     <main class="main-content">
         <?php if (isset($successMsg)) : ?>
             <h1 class="main-content__title">ВСЕ ГОТОВО</h1>
-            <div class="main-content__description"><?= $successMsg ?></div>
+            <div class="main-content__description"><?php echo $successMsg; ?></div>
         <?php else : ?>
             <h1 class="main-content__title">УСТАНОВКА</h1>
             <div class="main-content__description">Пожалуйста, выполните все шаги, и удостовертесь, что все проверки выполнены успешно</div>
@@ -31,21 +31,21 @@
                         <tbody>
                         <tr>
                             <td>Версия PHP</td>
-                            <td><?= phpversion() ?></td>
+                            <td><?php echo phpversion(); ?></td>
                             <td>5.4.0 и выше</td>
-                            <td><i class="<?= $checkReq['php'] ? 'success' : 'reject' ?>"></i></td>
+                            <td><i class="<?php echo $checkReq['php'] ? 'success' : 'reject'; ?>"></i></td>
                         </tr>
                         <tr>
                             <td>cURL</td>
-                            <td><?= $checkReq['php'] ? 'Подключено' : 'Не подключено' ?></td>
+                            <td><?php echo $checkReq['php'] ? 'Подключено' : 'Не подключено'; ?></td>
                             <td>Подключено</td>
-                            <td><i class="<?= $checkReq['curl'] ? 'success' : 'reject' ?>"></i></td>
+                            <td><i class="<?php echo $checkReq['curl'] ? 'success' : 'reject'; ?>"></i></td>
                         </tr>
                         <tr>
                             <td>Создание файлов</td>
-                            <td><?= $checkReq['file_create'] ? 'Возможно' : 'Невозможно' ?></td>
+                            <td><?php echo $checkReq['file_create'] ? 'Возможно' : 'Невозможно'; ?></td>
                             <td>Возможно</td>
-                            <td><i class="<?= $checkReq['file_create'] ? 'success' : 'reject' ?>"></i></td>
+                            <td><i class="<?php echo $checkReq['file_create'] ? 'success' : 'reject'; ?>"></i></td>
                         </tr>
                         </tbody>
                     </table>
@@ -60,7 +60,7 @@
                 <?php endif; ?>
             </div>
             <?php if (isset($inputErrorMsg)) : ?>
-                <div><?= $inputErrorMsg ?></div>
+                <div><?php echo $inputErrorMsg; ?></div>
             <?php endif; ?>
         <?php endif; ?>
     </main>
