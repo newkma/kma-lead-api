@@ -76,7 +76,7 @@ class KmaLead
     {
         $this->setHeaders();
         if ($curl = curl_init()) {
-            $this->echoDebugMessage(" - Отправка запроса апи {$data['method']} - ");
+            $this->echoDebugMessage(" - Отправка запроса апи - ");
             curl_setopt($curl, CURLOPT_URL, $this->leadUrl);
             curl_setopt($curl, CURLOPT_HEADER, false);
             curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
