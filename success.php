@@ -52,7 +52,7 @@ if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
 }
 
 if (empty($order)) {
-    include_once 'template/error.php';
+    header('Location: template/error.php');
 } else {
     session_start();
     $_SESSION['order'] = $order;
