@@ -1,3 +1,9 @@
+<?php
+session_start();
+$order = $_SESSION['order'] ?? '-';
+$name = $_SESSION['name'] ?? '-';
+$phone = $_SESSION['phone'] ?? '-';
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -42,12 +48,9 @@
                 <div class="header__info-title">
                     Информация о заказе:
                 </div>
-                <div class="header__info-order">
-                    <?= $order ?>                    </div>
-                <div class="header__info-phone">
-                    <?= $phone ?>                    </div>
-                <div class="header__info-name">
-                    <?= $name ?>                    </div>
+                <div class="header__info-order"><?= $order ?></div>
+                <div class="header__info-phone"><?= $phone ?></div>
+                <div class="header__info-name"><?= $name ?></div>
             </div>
         </div>
     </header>

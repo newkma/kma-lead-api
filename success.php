@@ -54,7 +54,11 @@ if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
 if (empty($order)) {
     include_once 'template/error.php';
 } else {
-    include_once 'template/success.php';
+    session_start();
+    $_SESSION['order'] = $order;
+    $_SESSION['name'] = $name;
+    $_SESSION['phone'] = $phone;
+    header('Location: template/success.php');
 }
 
 exit();
