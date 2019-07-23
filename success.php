@@ -15,6 +15,20 @@ if ($debug) {
     ini_set('display_errors', 1);
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['order_status'])) {
+    switch ($_GET['order_status']) {
+        case 'success':
+            include_once 'template/success.php';
+            break;
+        case 'error':
+            include_once 'template/error.php';
+            break;
+        default:
+            exit();
+    }
+    exit();
+}
+
 require_once 'KmaLead.php';
 
 /** @var KmaLead $kma */
@@ -52,9 +66,13 @@ if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
 }
 
 if (empty($order)) {
-    include_once 'template/error.php';
+    header('Location: success.php?order_status=error');
 } else {
-    include_once 'template/success.php';
+    session_start();
+    $_SESSION['order'] = $order;
+    $_SESSION['name'] = $name;
+    $_SESSION['phone'] = $phone;
+    header('Location: success.php?order_status=success');
 }
 
 exit();
