@@ -1,8 +1,8 @@
 <?php
 session_start();
-$order = $_SESSION['order'] ?? '-';
-$name = $_SESSION['name'] ?? '-';
-$phone = $_SESSION['phone'] ?? '-';
+$order = isset($_SESSION['order']) ? $_SESSION['order'] : '-';
+$name = isset($_SESSION['name']) ? $_SESSION['name'] : '-';
+$phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
