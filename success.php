@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $data = [
     'channel' => $channel,
-    'ip' => $_SERVER['REMOTE_ADDR'],
+    'ip' => $kma->getIp(),
 ];
 
 foreach (['name', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'click', 'referer', 'return_page', 'client_data'] as $item) {

@@ -133,7 +133,7 @@ class KmaLead
      */
     private function setClickHeaders($channel)
     {
-        $this->headers['X-Forwarded-For'] = $_SERVER['REMOTE_ADDR'];
+        $this->headers['X-Forwarded-For'] = $this->getIp();
         $this->headers['X-Kma-Channel'] = $channel;
         if (isset($this->headers['X-Referer']) && !empty($this->headers['X-Referer'])) {
             $this->headers['Referer'] = $this->headers['X-Referer'];
@@ -152,5 +152,34 @@ class KmaLead
                 echo "<br> $data <br>";
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getIp()
+    {
+        foreach ([
+                     'HTTP_CF_CONNECTING_IP',
+                     'HTTP_X_FORWARDED_FOR',
+                     'REMOTE_ADDR',
+                 ] as $key) {
+            if (array_key_exists($key, $_SERVER)) {
+                $ips = explode(',', $_SERVER[$key]);
+                $ips = array_map('trim', $ips);
+                $ips = array_filter($ips);
+                foreach ($ips as $ip) {
+                    $ip = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+                    if (!empty($ip)) {
+                        return $ip;
+                    }
+                    $ip = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+                    if (!empty($ip)) {
+                        return $ip;
+                    }
+                }
+            }
+        }
+        return '127.0.0.1';
     }
 }
