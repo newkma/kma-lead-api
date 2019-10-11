@@ -76,7 +76,7 @@ $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
                     <div class="form-wrap__title">
                         Оставьте свои данные для доставки
                     </div>
-                    <form class="horizontal-form" action="api/success.php" method="POST">
+                    <form class="horizontal-form" action="" method="POST">
                         <input class="form-input" type="hidden" name="template" value="delivery"/>
                         <input class="form-input" type="hidden" name="order" value="<?= $order ?>"/>
                         <input class="form-input" type="text" name="zip" placeholder="Почтовый индекс" required/>

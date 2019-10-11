@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['order_status'])) {
         default:
             exit('Template not exists');
     }
+    exit();
 }
 
 require_once 'KmaLead.php';
@@ -76,6 +77,7 @@ if (isset($_POST['template'])) {
         default:
             exit('Template not exists');
     }
+    exit();
 }
 
 foreach (['name', 'surname', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'fbp', 'click', 'referer', 'return_page', 'client_data'] as $item) {
@@ -86,7 +88,6 @@ foreach (['name', 'surname', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5
 
 if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
     echo $kma->addLeadAndReturnPage($data);
-    exit();
 } else {
     $array = $kma->addLead($data);
     if (empty($array)) {
