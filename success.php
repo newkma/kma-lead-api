@@ -61,14 +61,10 @@ $data = [
 if (isset($_POST['template'])) {
     switch ($_POST['template']) {
         case 'delivery':
-            foreach (['order', 'zip', 'city', 'street', 'house', 'flat'] as $item) {
-                if (isset($_POST[$item]) && !empty($_POST[$item])) {
-                    $data[$item] = $_POST[$item];
-                }
-            }
+            $kma->appendData($data, KmaLead::LEAD_UPDATE_FIELDS);
             $array = $kma->updateLead($data);
             if (empty($array)) {
-                exit('Update lead error');
+                header("Location: success.php?order_status=error");
             } else {
                 $template = $checkout ? 'checkout' : 'success';
                 header("Location: success.php?order_status=$template");
@@ -80,11 +76,7 @@ if (isset($_POST['template'])) {
     exit();
 }
 
-foreach (['name', 'surname', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'fbp', 'click', 'referer', 'return_page', 'client_data'] as $item) {
-    if (isset($_POST[$item]) && !empty($_POST[$item])) {
-        $data[$item] = $_POST[$item];
-    }
-}
+$kma->appendData($data, KmaLead::LEAD_ADD_FIELDS);
 
 if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
     echo $kma->addLeadAndReturnPage($data);

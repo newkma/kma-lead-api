@@ -9,6 +9,9 @@ class KmaLead
     private $headers = [];
     public $debug = false;
 
+    const LEAD_ADD_FIELDS = ['name', 'surname', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'fbp', 'click', 'referer', 'return_page', 'client_data'];
+    const LEAD_UPDATE_FIELDS = ['order', 'zip', 'city', 'street', 'house', 'flat'];
+
     /**
      * @param string $token
      */
@@ -203,5 +206,18 @@ class KmaLead
             }
         }
         return '127.0.0.1';
+    }
+
+    /**
+     * @param array $data
+     * @param array $fields
+     */
+    public function appendData(&$data, $fields = [])
+    {
+        foreach ($fields as $item) {
+            if (isset($_POST[$item]) && !empty($_POST[$item])) {
+                $data[$item] = $_POST[$item];
+            }
+        }
     }
 }
