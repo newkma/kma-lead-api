@@ -31,10 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['order_status'])) {
         case 'checkout':
             include_once 'template/checkout.php';
             break;
-        default:
-            exit('Template not exists');
     }
-    exit();
+    exit('Template not exists');
 }
 
 require_once 'KmaLead.php';
@@ -70,10 +68,8 @@ if (isset($_POST['template'])) {
                 header("Location: success.php?order_status=$template");
             }
             break;
-        default:
-            exit('Template not exists');
     }
-    exit();
+    exit('Template not exists');
 }
 
 $kma->appendData($data, KmaLead::LEAD_ADD_FIELDS);
