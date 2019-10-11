@@ -55,6 +55,8 @@
                     <form class="horizontal-form" action="install.php" method="POST">
                         <input class="form-input" type="text" name="token" placeholder="Token" required/>
                         <input class="form-input" type="text" name="channel" placeholder="Поток" required/>
+                        <input class="form-input" type="checkbox" name="delivery" placeholder="Доставка" required/>
+                        <input class="form-input" type="checkbox" name="checkout" placeholder="Оплата" required/>
                         <button class="form-button" type="submit">Сохранить</button>
                     </form>
                 <?php endif; ?>

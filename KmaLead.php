@@ -2,7 +2,8 @@
 
 class KmaLead
 {
-    private $leadUrl = 'https://api.kma.biz/lead/add';
+    private $leadAddUrl = 'https://api.kma.biz/lead/add';
+    private $leadUpdateUrl = 'https://api.kma.biz/lead/update';
     private $clickUrl = 'https://api.kma.biz/click/make';
     private $token;
     private $headers = [];
@@ -39,16 +40,36 @@ class KmaLead
 
     /**
      * @param array $data
-     * @return bool|string
+     * @return bool|array
      */
     public function addLead($data)
     {
-        $result = $this->sendRequest($data);
+        $result = $this->sendRequest($data, $this->leadAddUrl);
         $this->echoDebugMessage($data);
         $array = json_decode($result, true);
         $this->echoDebugMessage(json_last_error() === JSON_ERROR_NONE ? $array : $result);
         if (isset($array['order'])) {
-            return $array['order'];
+            return $array;
+        }
+        if (isset($array['code'], $array['message'])) {
+            $this->echoDebugMessage("Код ошибки: {$array['code']}. Текст ошибки: {$array['message']}");
+            return false;
+        }
+        return false;
+    }
+
+    /**
+     * @param array $data
+     * @return bool|array
+     */
+    public function updateLead($data)
+    {
+        $result = $this->sendRequest($data, $this->leadUpdateUrl);
+        $this->echoDebugMessage($data);
+        $array = json_decode($result, true);
+        $this->echoDebugMessage(json_last_error() === JSON_ERROR_NONE ? $array : $result);
+        if (isset($array['order'])) {
+            return $array;
         }
         if (isset($array['code'], $array['message'])) {
             $this->echoDebugMessage("Код ошибки: {$array['code']}. Текст ошибки: {$array['message']}");
@@ -63,21 +84,22 @@ class KmaLead
      */
     public function addLeadAndReturnPage($data)
     {
-        $result = $this->sendRequest($data);
+        $result = $this->sendRequest($data, $this->leadAddUrl);
         $this->echoDebugMessage($data);
         return $result;
     }
 
     /**
      * @param array $data
+     * @param string $url
      * @return bool|string
      */
-    private function sendRequest($data)
+    private function sendRequest($data, $url)
     {
         $this->setHeaders();
         if ($curl = curl_init()) {
             $this->echoDebugMessage(" - Отправка запроса апи - ");
-            curl_setopt($curl, CURLOPT_URL, $this->leadUrl);
+            curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_HEADER, false);
             curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
             curl_setopt($curl, CURLOPT_POST, true);

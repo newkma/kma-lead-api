@@ -20,6 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $output  = "<?php" . PHP_EOL . PHP_EOL;
             $output .= "define('KMA_ACCESS_TOKEN', '{$_POST['token']}');" . PHP_EOL;
             $output .= "define('KMA_CHANNEL', '{$_POST['channel']}');" . PHP_EOL;
+            $delivery = (isset($_POST['delivery']) && !empty($_POST['delivery'])) ? 1 : 0;
+            $output .= "define('KMA_DELIVERY', $delivery);" . PHP_EOL;
+            $checkout = (isset($_POST['checkout']) && !empty($_POST['checkout'])) ? 1 : 0;
+            $output .= "define('KMA_CHECKOUT', $checkout);" . PHP_EOL;
             $output .= "define('KMA_DEBUG', false);" . PHP_EOL;
             file_put_contents('config.php', $output);
             header('Location: install.php?action=done');
