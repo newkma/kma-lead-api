@@ -60,7 +60,7 @@ $data = [
 if (isset($_POST['template'])) {
     switch ($_POST['template']) {
         case 'delivery':
-            foreach (['order', 'lastname', 'zipindex', 'city', 'street', 'house', 'flat'] as $item) {
+            foreach (['order', 'zip', 'city', 'street', 'house', 'flat'] as $item) {
                 if (isset($_POST[$item]) && !empty($_POST[$item])) {
                     $data[$item] = $_POST[$item];
                 }
@@ -78,7 +78,7 @@ if (isset($_POST['template'])) {
     }
 }
 
-foreach (['name', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'fbp', 'click', 'referer', 'return_page', 'client_data'] as $item) {
+foreach (['name', 'surname', 'phone', 'data1', 'data2', 'data3', 'data4', 'data5', 'fbp', 'click', 'referer', 'return_page', 'client_data'] as $item) {
     if (isset($_POST[$item]) && !empty($_POST[$item])) {
         $data[$item] = $_POST[$item];
     }
