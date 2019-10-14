@@ -30,6 +30,27 @@ $currency = isset($_SESSION['currency']) ? $_SESSION['currency'] : '-';
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://widget.cloudpayments.ru/bundles/cloudpayments"></script>
+    <script type="text/javascript">
+        $(function() {
+            var widget = new cp.CloudPayments();
+            widget.charge({
+                    publicId: 'pk_f7d9735203451116661c46ad06082',
+                    description: 'Оплата за заказ № <?=$order;?>',
+                    amount: '<?=$price;?>',
+                    currency: '<?=$currency;?>',
+                    invoiceId: '<?=$order;?>',
+                    skin: "mini"
+                },
+                function (options) {
+                    alert('Оплата прошла успешно!');
+                },
+                function (reason, options) {
+                    alert('Произошла ошибка во время оплаты!');
+           });
+        });
+    </script>
 </head>
 <body>
 <div class="wrap">
