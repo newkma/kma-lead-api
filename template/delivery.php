@@ -83,7 +83,7 @@ $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
                         <input class="form-input" type="text" name="city" placeholder="Город" required/>
                         <input class="form-input" type="text" name="street" placeholder="Улица" required/>
                         <input class="form-input" type="text" name="house" placeholder="Дом" required/>
-                        <input class="form-input" type="text" name="flat" placeholder="Квартира" required/>
+                        <input class="form-input" type="text" name="flat" placeholder="Квартира"/>
                         <button class="form-button" type="submit">Передать</button>
                     </form>
                 </div>
