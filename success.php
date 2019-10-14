@@ -65,6 +65,10 @@ if (isset($_POST['template'])) {
                 header("Location: success.php?order_status=error");
             } else {
                 $template = $checkout ? 'checkout' : 'success';
+                $_SESSION['order'] = $array['order'];
+                $_SESSION['country'] = $array['country'];
+                $_SESSION['price'] = $array['country'];
+                $_SESSION['currency'] = $array['currency'];
                 header("Location: success.php?order_status=$template");
             }
             break;
