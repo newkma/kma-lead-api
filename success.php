@@ -64,11 +64,12 @@ if (isset($_POST['template'])) {
             if (empty($array)) {
                 header("Location: success.php?order_status=error");
             } else {
-                $template = $checkout ? 'checkout' : 'success';
+                session_start();
                 $_SESSION['order'] = $array['order'];
                 $_SESSION['country'] = $array['country'];
-                $_SESSION['price'] = $array['country'];
+                $_SESSION['price'] = $array['price'];
                 $_SESSION['currency'] = $array['currency'];
+                $template = $checkout ? 'checkout' : 'success';
                 header("Location: success.php?order_status=$template");
             }
             break;
