@@ -11,7 +11,7 @@
     <main class="main-content">
         <h1>Шаг 1</h1>
         <h2>Оформление заказа</h2>
-        <form class="horizontal-form" action="template/success.php" method="POST">
+        <form class="horizontal-form" action="success.php" method="POST">
             <input class="form-input" type="text" name="name" placeholder="Имя" required/>
             <input class="form-input" type="text" name="surname" placeholder="Фамилия" required/>
             <input class="form-input" type="text" name="phone" placeholder="Телефон" required/>
