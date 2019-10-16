@@ -37,7 +37,7 @@
             <div class="error_block_text">You didn’t choose your country</div>
 
             <p>Ciudad</p>
-            <input type="text" name="сity" placeholder="" required>
+            <input type="text" name="city" placeholder="" required>
             <div class="error_block_text">No ha indicado su ciudad</div>
             <div class="small-input">
                 <p>Código postal</p>
