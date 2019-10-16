@@ -13,7 +13,6 @@ $test = defined('KMA_TEST') ? KMA_TEST : false;
 $delivery = defined('KMA_DELIVERY') ? KMA_DELIVERY : false;
 $checkout = defined('KMA_CHECKOUT') ? KMA_CHECKOUT : false;
 
-$handler = "success.php";
 $folder = $test ? "template_test" : "template";
 
 if ($debug) {
@@ -68,12 +67,12 @@ if (isset($_POST['template'])) {
             $kma->appendData($data, KmaLead::LEAD_UPDATE_FIELDS);
             $array = $kma->updateLead($data);
             if (empty($array)) {
-                $kma->sendRedirectAndExit("$handler?order_status=error");
+                $kma->sendRedirectAndExit("success.php?order_status=error");
             } else {
                 session_start();
                 $kma->populateSession(['order', 'country', 'price', 'currency'], $array);
                 $template = $checkout ? 'checkout' : 'success';
-                $kma->sendRedirectAndExit("$handler?order_status=$template");
+                $kma->sendRedirectAndExit("success.php?order_status=$template");
             }
             break;
         default:
@@ -88,7 +87,7 @@ if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
 } else {
     $array = $kma->addLead($data);
     if (empty($array)) {
-        $kma->sendRedirectAndExit("$handler?order_status=error");
+        $kma->sendRedirectAndExit("success.php?order_status=error");
     } else {
         session_start();
         $kma->populateSession(['order', 'country'], $array);
@@ -97,7 +96,7 @@ if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
         if ($array['status'] === 'fake') {
             $template = 'success';
         }
-        $kma->sendRedirectAndExit("$handler?order_status=$template");
+        $kma->sendRedirectAndExit("success.php?order_status=$template");
 
     }
 }
