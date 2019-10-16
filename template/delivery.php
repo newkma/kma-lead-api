@@ -35,11 +35,9 @@
                 <option value="<?= $country ?>">Spain</option>
             </select>
             <div class="error_block_text">You didn’t choose your country</div>
-            <p>Provincia</p>
-            <input type="text" name="state" placeholder="" required>
-            <div class="error_block_text">No ha indicado su provincia</div>
+
             <p>Ciudad</p>
-            <input type="text" name="city" placeholder="" required>
+            <input type="text" name="сity" placeholder="" required>
             <div class="error_block_text">No ha indicado su ciudad</div>
             <div class="small-input">
                 <p>Código postal</p>
