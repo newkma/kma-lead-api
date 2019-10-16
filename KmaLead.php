@@ -220,4 +220,21 @@ class KmaLead
             }
         }
     }
+
+    /**
+     * @param array $items
+     * @param array $data
+     */
+    public function populateSession($items, $data)
+    {
+        foreach ($items as $item) {
+            $_SESSION[$item] = isset($data[$item]) ? $data[$item] : '-';
+        }
+    }
+
+    public function sendRedirectAndExit($location)
+    {
+        header("Location: $location");
+        exit;
+    }
 }

@@ -12,7 +12,7 @@ $debug = defined('KMA_DEBUG') ? KMA_DEBUG : false;
 $delivery = defined('KMA_DELIVERY') ? KMA_DELIVERY : false;
 $checkout = defined('KMA_CHECKOUT') ? KMA_CHECKOUT : false;
 
-$handler = "success.php";
+$handler = "success_test.php";
 
 if ($debug) {
     error_reporting(E_ALL);
@@ -22,16 +22,16 @@ if ($debug) {
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['order_status'])) {
     switch ($_GET['order_status']) {
         case 'success':
-            include_once "template/success.php";
+            include_once "template_test/success.php";
             break;
         case 'error':
-            include_once "template/error.php";
+            include_once "template_test/error.php";
             break;
         case 'delivery':
-            include_once "template/delivery.php";
+            include_once "template_test/delivery.php";
             break;
         case 'checkout':
-            include_once "template/checkout.php";
+            include_once "template_test/checkout.php";
             break;
         default:
             exit('Template not exists');
