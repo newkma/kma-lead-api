@@ -84,7 +84,7 @@ $kma->appendData($data, KmaLead::LEAD_ADD_FIELDS);
 if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
     echo $kma->addLeadAndReturnPage($data);
 } else {
-    $array = ['order' => 1, 'country' => 'RU'];//$kma->addLead($data);
+    $array = $kma->addLead($data);
     if (empty($array)) {
         $kma->sendRedirectAndExit("$handler?order_status=error");
     } else {
