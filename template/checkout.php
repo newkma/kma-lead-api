@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Payment</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
-    <link rel="stylesheet" href="../css/payment_style.css">
+    <link rel="stylesheet" href="css/payment_style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://widget.cloudpayments.ru/bundles/cloudpayments"></script>
     <script type="text/javascript">
@@ -65,15 +65,15 @@
             <b>Fast, Free Shipping</b> For A Limited Time
         </a>
         <div class="flex">
-            <div class="i_flex"><img src="../img/payment/1.jpg" alt=""></div>
-            <div class="i_flex"><img src="../img/payment/2.jpg" alt=""></div>
-            <div class="i_flex"><img src="../img/payment/3.jpg" alt=""></div>
+            <div class="i_flex"><img src="mg/payment/1.jpg" alt=""></div>
+            <div class="i_flex"><img src="img/payment/2.jpg" alt=""></div>
+            <div class="i_flex"><img src="img/payment/3.jpg" alt=""></div>
         </div>
     </div>
 </div>
 <div class="secure">
     <div class="container">
-        <img src="../img/payment/safe.jpg" alt="">
+        <img src="img/payment/safe.jpg" alt="">
     </div>
 </div>
 <div class="copyright">
@@ -91,7 +91,8 @@
         </p>-->
     </div>
 </div>
-<script src="../js/main.js"></script>
+<script src="js/jquery-2.2.4.min.js"></script>
+<script src="js/main.js"></script>
 
 <div id="polit" class="modal">
     <div class="modal-block">
