@@ -39,11 +39,11 @@
             <input type="text" name="state" placeholder="" required>
             <div class="error_block_text">No ha indicado su provincia</div>
             <p>Ciudad</p>
-            <input type="text" name="sity" placeholder="" required>
+            <input type="text" name="city" placeholder="" required>
             <div class="error_block_text">No ha indicado su ciudad</div>
             <div class="small-input">
                 <p>Código postal</p>
-                <input type="text" name="code" placeholder="" required>
+                <input type="text" name="zip" placeholder="" required>
                 <div class="error_block_text">No ha indicado su código postal</div>
             </div>
             <p>Indique la calle</p>
