@@ -1,4 +1,4 @@
-<?php include_once "../_session.php"; ?>
+<?php session_start(); require_once dirname(__DIR__) . "/_session.php"; ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
