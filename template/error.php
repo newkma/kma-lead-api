@@ -40,15 +40,15 @@
             <b>Fast, Free Shipping</b> For A Limited Time
         </a>
         <div class="flex">
-            <div class="i_flex"><img src="../img/payment/1.jpg" alt=""></div>
-            <div class="i_flex"><img src="../img/payment/2.jpg" alt=""></div>
-            <div class="i_flex"><img src="../img/payment/3.jpg" alt=""></div>
+            <div class="i_flex"><img src="img/payment/1.jpg" alt=""></div>
+            <div class="i_flex"><img src="img/payment/2.jpg" alt=""></div>
+            <div class="i_flex"><img src="img/payment/3.jpg" alt=""></div>
         </div>
     </div>
 </div>
 <div class="secure">
     <div class="container">
-        <img src="../img/payment/safe.jpg" alt="">
+        <img src="img/payment/safe.jpg" alt="">
     </div>
 </div>
 <div class="copyright">
@@ -66,7 +66,8 @@
         </p>-->
     </div>
 </div>
-<script src="../js/main.js"></script>
+<script src="js/jquery-2.2.4.min.js"></script>
+<script src="js/main.js"></script>
 
 <div id="polit" class="modal">
     <div class="modal-block">
