@@ -65,7 +65,7 @@
             <b>Fast, Free Shipping</b> For A Limited Time
         </a>
         <div class="flex">
-            <div class="i_flex"><img src="mg/payment/1.jpg" alt=""></div>
+            <div class="i_flex"><img src="img/payment/1.jpg" alt=""></div>
             <div class="i_flex"><img src="img/payment/2.jpg" alt=""></div>
             <div class="i_flex"><img src="img/payment/3.jpg" alt=""></div>
         </div>
