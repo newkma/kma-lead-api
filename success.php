@@ -93,23 +93,15 @@ if (isset($_POST['return_page']) && !empty($_POST['return_page'])) {
         header("Location: success.php?order_status=error");
     } else {
         session_start();
-        $template = 'success';
-        switch ($array['status']) {
-            case 'double':
-                $_SESSION['order'] = 'DOUBLE';
-                break;
-            case 'fake':
-                $_SESSION['order'] = 'FAKE';
-                break;
-            case 'ok':
-            default:
-                $_SESSION['order'] = $array['order'];
-                $_SESSION['country'] = $array['country'];
-                $template = $delivery ? 'delivery' : 'success';
-        }
+        $_SESSION['order'] = $array['order'];
+        $_SESSION['country'] = $array['country'];
         $_SESSION['name'] = isset($data['name']) ? $data['name'] : '-';
         $_SESSION['surname'] = isset($data['surname']) ? $data['surname'] : '-';
         $_SESSION['phone'] = isset($data['phone']) ? $data['phone'] : '-';
+        $template = $delivery ? 'delivery' : 'success';
+        if ($array['status'] === 'fake') {
+            $template = 'success';
+        }
         header("Location: success.php?order_status=$template");
 
     }
