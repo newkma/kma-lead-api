@@ -3,6 +3,7 @@ session_start();
 $order = isset($_SESSION['order']) ? $_SESSION['order'] : '-';
 $country = isset($_SESSION['country']) ? $_SESSION['country'] : '-';
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : '-';
+$surname = isset($_SESSION['surname']) ? $_SESSION['surname'] : '-';
 $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
 ?>
 <!DOCTYPE html>
