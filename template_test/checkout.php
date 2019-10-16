@@ -3,6 +3,7 @@ session_start();
 $order = isset($_SESSION['order']) ? $_SESSION['order'] : '-';
 $country = isset($_SESSION['country']) ? $_SESSION['country'] : '-';
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : '-';
+$surname = isset($_SESSION['surname']) ? $_SESSION['surname'] : '-';
 $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
 $price = isset($_SESSION['price']) ? $_SESSION['price'] : '-';
 $currency = isset($_SESSION['currency']) ? $_SESSION['currency'] : '-';
@@ -42,9 +43,10 @@ $currency = isset($_SESSION['currency']) ? $_SESSION['currency'] : '-';
 <body>
 <h1>Спасибо!</h1>
 <h3>Информация о заказе:</h3>
-<p><?= $order ?></p>
-<p><?= $name ?></p>
-<p><?= $phone ?></p>
+<p>Номер заказа: <?= $order ?></p>
+<p>Имя: <?= $name ?></p>
+<p>Фамилия: <?= $surname ?></p>
+<p>Телефон: <?= $phone ?></p>
 <h3>Оплатить:</h3>
 <button id="payout_button" type="button"><span>Pay</span></button>
 </body>

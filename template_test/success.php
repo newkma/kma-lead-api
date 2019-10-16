@@ -2,6 +2,7 @@
 session_start();
 $order = isset($_SESSION['order']) ? $_SESSION['order'] : '-';
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : '-';
+$surname = isset($_SESSION['surname']) ? $_SESSION['surname'] : '-';
 $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
 ?>
 <!DOCTYPE html>
@@ -15,9 +16,10 @@ $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
 <body>
 <h1>Спасибо!</h1>
 <h3>Информация о заказе:</h3>
-<p><?= $order ?></p>
-<p><?= $name ?></p>
-<p><?= $phone ?></p>
+<p>Номер заказа: <?= $order ?></p>
+<p>Имя: <?= $name ?></p>
+<p>Фамилия: <?= $surname ?></p>
+<p>Телефон: <?= $phone ?></p>
 <h3>E-mail для связи:</h3>
 <div>
     <form action="#" method="POST">
