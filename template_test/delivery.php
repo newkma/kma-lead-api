@@ -1,11 +1,4 @@
-<?php
-session_start();
-$order = isset($_SESSION['order']) ? $_SESSION['order'] : '-';
-$country = isset($_SESSION['country']) ? $_SESSION['country'] : '-';
-$name = isset($_SESSION['name']) ? $_SESSION['name'] : '-';
-$surname = isset($_SESSION['surname']) ? $_SESSION['surname'] : '-';
-$phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
-?>
+<?php session_start(); require_once dirname(__DIR__) . "/_session.php"; ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>

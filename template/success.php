@@ -1,10 +1,4 @@
-<?php
-session_start();
-$order = isset($_SESSION['order']) ? $_SESSION['order'] : '-';
-$name = isset($_SESSION['name']) ? $_SESSION['name'] : '-';
-$surname = isset($_SESSION['surname']) ? $_SESSION['surname'] : '-';
-$phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
-?>
+<?php include_once "../_session.php"; ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
