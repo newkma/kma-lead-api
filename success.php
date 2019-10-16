@@ -9,10 +9,12 @@ if (is_file('config.php')) {
 $token = defined('KMA_ACCESS_TOKEN') ? KMA_ACCESS_TOKEN : 'access token';
 $channel = defined('KMA_CHANNEL') ? KMA_CHANNEL : 'channel';
 $debug = defined('KMA_DEBUG') ? KMA_DEBUG : false;
+$test = defined('KMA_TEST') ? KMA_TEST : false;
 $delivery = defined('KMA_DELIVERY') ? KMA_DELIVERY : false;
 $checkout = defined('KMA_CHECKOUT') ? KMA_CHECKOUT : false;
 
 $handler = "success.php";
+$folder = $test ? "template_test" : "template";
 
 if ($debug) {
     error_reporting(E_ALL);
@@ -22,16 +24,16 @@ if ($debug) {
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['order_status'])) {
     switch ($_GET['order_status']) {
         case 'success':
-            include_once "template/success.php";
+            include_once "$folder/success.php";
             break;
         case 'error':
-            include_once "template/error.php";
+            include_once "$folder/error.php";
             break;
         case 'delivery':
-            include_once "template/delivery.php";
+            include_once "$folder/delivery.php";
             break;
         case 'checkout':
-            include_once "template/checkout.php";
+            include_once "$folder/checkout.php";
             break;
         default:
             exit('Template not exists');
