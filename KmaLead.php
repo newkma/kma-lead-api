@@ -113,7 +113,7 @@ class KmaLead
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-            curl_setopt($curl,CURLOPT_TIMEOUT,15);
+            curl_setopt($curl,CURLOPT_TIMEOUT,5);
             $result = curl_exec($curl);
             curl_close($curl);
             return $result;
