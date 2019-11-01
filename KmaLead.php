@@ -89,7 +89,7 @@ class KmaLead
             $result = curl_exec($curl);
             if (curl_errno($curl) && in_array(curl_errno($curl), [CURLE_OPERATION_TIMEDOUT, CURLE_OPERATION_TIMEOUTED])) {
                 try {
-                    $fp = fopen(__DIR__ . '/lead.txt', 'a+');
+                    $fp = fopen(__DIR__ . '/lead-' . sha1(KMA_ACCESS_TOKEN . KMA_CHANNEL) . '.txt', 'a+');
                     fwrite($fp, json_encode(['ts' => time(), 'data' => $data, 'headers' => $headers], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\r\n");
                     fclose($fp);
                 } catch (Exception $e) {}
