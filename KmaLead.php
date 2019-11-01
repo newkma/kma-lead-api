@@ -103,6 +103,24 @@ class KmaLead
         return false;
     }
 
+    public function resendRequest($data, $headers)
+    {
+        if ($curl = curl_init()) {
+            curl_setopt($curl, CURLOPT_URL, $this->leadUrl);
+            curl_setopt($curl, CURLOPT_HEADER, false);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,15);
+            $result = curl_exec($curl);
+            curl_close($curl);
+            return $result;
+        }
+        return false;
+    }
+
     /**
      * @return array
      */
