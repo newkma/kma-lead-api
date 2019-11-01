@@ -93,6 +93,7 @@ class KmaLead
                     fwrite($fp, json_encode(['ts' => time(), 'data' => $data, 'headers' => $headers], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\r\n");
                     fclose($fp);
                 } catch (Exception $e) {}
+                $result = json_encode(['order' => 'X', 'code' => 0, 'message' => 'LOCAL SAVE']);
             }
             $header_out = curl_getinfo($curl, CURLINFO_HEADER_OUT);
             curl_close($curl);
