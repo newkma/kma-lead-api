@@ -77,14 +77,23 @@ class KmaLead
         $this->setHeaders();
         if ($curl = curl_init()) {
             $this->echoDebugMessage(" - Отправка запроса апи - ");
+            $headers = $this->getHeaders();
             curl_setopt($curl, CURLOPT_URL, $this->leadUrl);
             curl_setopt($curl, CURLOPT_HEADER, false);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,15);
             $result = curl_exec($curl);
+            if (curl_errno($curl) && in_array(curl_errno($curl), [CURLE_OPERATION_TIMEDOUT, CURLE_OPERATION_TIMEOUTED])) {
+                try {
+                    $fp = fopen(__DIR__ . '/lead.txt', 'a+');
+                    fwrite($fp, json_encode(['ts' => time(), 'data' => $data, 'headers' => $headers], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\r\n");
+                    fclose($fp);
+                } catch (Exception $e) {}
+            }
             $header_out = curl_getinfo($curl, CURLINFO_HEADER_OUT);
             curl_close($curl);
             $this->echoDebugMessage("<pre>$header_out</pre>");
