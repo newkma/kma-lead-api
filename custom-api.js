@@ -33,22 +33,18 @@
         return result;
     }
 
-    function appendReferrer() {
-        if (!!document.referrer) appendInputToAllForms("referer", document.referrer);
-    }
-
     function appendClick() {
         if (!!sessionStorage.getItem('kma-click')) {
             return appendInputToAllForms("click", sessionStorage.getItem('kma-click'));
         }
-        var utm_source = findGetParameter("utm_source");
-        var utm_medium = findGetParameter("utm_medium");
-        var utm_campaign = findGetParameter("utm_campaign");
-        var utm_content = findGetParameter("utm_content");
-        var utm_term = findGetParameter("utm_term");
+        var data1 = findGetParameter("d1") || findGetParameter("data1") || findGetParameter("utm_source");
+        var data2 = findGetParameter("d2") || findGetParameter("data2") || findGetParameter("utm_medium");
+        var data3 = findGetParameter("d3") || findGetParameter("data3") || findGetParameter("utm_campaign");
+        var data4 = findGetParameter("d4") || findGetParameter("data4") || findGetParameter("utm_content");
+        var data5 = findGetParameter("d5") || findGetParameter("data5") || findGetParameter("utm_term");
         var fbp = findGetParameter("fbp");
-        var query = "data1=" + utm_source + "&data2=" + utm_medium + "&data3=" + utm_campaign + "&data4=" + utm_content + "&data5=" + utm_term + "&fbp=" + fbp;
-        const xhr = new XMLHttpRequest();
+        var query = "data1=" + data1 + "&data2=" + data2 + "&data3=" + data3 + "&data4=" + data4 + "&data5=" + data5 + "&fbp=" + fbp;
+        var xhr = new XMLHttpRequest();
         xhr.open("GET", "api/success.php?" + query, true);
         xhr.setRequestHeader('X-Kma-Api', 'click');
         if (!!document.referrer) xhr.setRequestHeader('X-Referer', document.referrer);
@@ -67,6 +63,13 @@
         };
     }
 
-    appendReferrer();
     appendClick();
+
+    function prepareData(){
+        appendInputToForm(this, 'address', JSON.stringify($(this).serializeArray()));
+    }
+
+    document.querySelectorAll("form").forEach(function (item) {
+        item.addEventListener("submit", prepareData, true);
+    })
 }());
