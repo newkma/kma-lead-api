@@ -3,12 +3,19 @@ session_start();
 $order = isset($_SESSION['order']) ? $_SESSION['order'] : '-';
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : '-';
 $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
+
+$language = isset($_SESSION['language']) ? $_SESSION['language'] : 'ru';
+$translationDir = dirname(__DIR__) . '/translations';
+if (file_exists($translationDir)) {
+    $i18nFile = file_exists("$translationDir/$language.php") ? "$translationDir/$language.php" : "$translationDir/ru.php";
+    include_once $i18nFile;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Спасибо!</title>
+    <title><?= $i18n['newsuccess_thanks'] ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700&amp;subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
