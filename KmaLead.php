@@ -140,7 +140,8 @@ class KmaLead
             }
         }
         if (isset($this->headers['Host']) && !empty($this->headers['Host'])) {
-            $this->headers['X-Host-Url'] = $_SERVER['REQUEST_SCHEME'] . "://" . $this->headers['Host'] . $_SERVER['REQUEST_URI'];
+            $rs = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
+            $this->headers['X-Host-Url'] = $rs . "://" . $this->headers['Host'] . $_SERVER['REQUEST_URI'];
         }
         $this->filterHeaders();
         $this->headers['Accept'] = 'application/json';
