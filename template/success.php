@@ -3,12 +3,19 @@ session_start();
 $order = isset($_SESSION['order']) ? $_SESSION['order'] : '-';
 $name = isset($_SESSION['name']) ? $_SESSION['name'] : '-';
 $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
+
+$language = isset($_SESSION['language']) ? $_SESSION['language'] : 'ru';
+$translationDir = dirname(__DIR__) . '/translations';
+if (file_exists($translationDir)) {
+    $i18nFile = file_exists("$translationDir/$language.php") ? "$translationDir/$language.php" : "$translationDir/ru.php";
+    include_once $i18nFile;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Спасибо!</title>
+    <title><?= $i18n['newsuccess_thanks'] ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700&amp;subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -35,18 +42,17 @@ $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
     <header class="header">
         <div class="header__left">
             <div class="header__title">
-                Спасибо!
+                <?= $i18n['newsuccess_thanks'] ?>
             </div>
             <div class="header__description">
-                <h3>Пожалуйста, не выключайте Ваш контактный телефон.</h3>
-                Ваш заказ оформлен, и принят к исполнению нашими сотрудниками! В ближайшее время с Вами свяжется
-                менеджер для уточнения деталей.
+                <h3><?= $i18n['newsuccess_dontturnoff'] ?></h3>
+                <?= $i18n['newsuccess_orderaccept'] ?> <?= $i18n['newsuccess_contactyou'] ?>
             </div>
         </div>
         <div class="header__right">
             <div class="header__info">
                 <div class="header__info-title">
-                    Информация о заказе:
+                    <?= $i18n['newsuccess_orderinfo'] ?>
                 </div>
                 <div class="header__info-order"><?= $order ?></div>
                 <div class="header__info-phone"><?= $phone ?></div>
@@ -55,30 +61,27 @@ $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
         </div>
     </header>
     <main class="main-content">
-        <h1 class="main-content__title">
-            КАК ПОЛУЧИТЬ МАКСИМАЛЬНЫЙ ЭФФЕКТ ОТ ВАШЕЙ ПОКУПКИ? </h1>
+        <h1 class="main-content__title"><?= $i18n['newsuccess_howto'] ?></h1>
         <div class="main-content__description">
-            Получите подробную инструкцию, узнайте, как использовать покупку на 100% эффективно!
+            <?= $i18n['newsuccess_getinstr'] ?>
         </div>
         <div class="form-block">
             <div class="form-block__left">
                 <div class="form-block__left-info">
-                    Подтвердите свой е-mail в течение 2 часов, чтобы получить получить детальную инструкцию по
-                    использованию нашей продукции, для достижения лучших результатов!
+                    <?= $i18n['newsuccess_confirm'] ?>
                 </div>
                 <div class="form-block__left-discount">
-                    А щё мы подарим вам постоянную скидку 75% на все покупки! Следите за нашими акциями!
+                    <?= $i18n['newsuccess_discount'] ?>
                 </div>
             </div>
             <div class="form-block__right">
                 <div class="form-wrap">
                     <div class="form-wrap__title">
-                        Оставьте свой e-mail и мы вышлем Вам детальную инструкцию по использованию нашей продукции!
+                        <?= $i18n['newsuccess_email'] ?>
                     </div>
                     <form action="#" class="main-form" method="POST">
-                        <input type="email" name="email" class="main-form__email" placeholder="Оставьте e-mail…"
-                               required="">
-                        <button type="submit" class="main-form__button">Получить инструкцию</button>
+                        <input type="email" name="email" class="main-form__email" placeholder="<?= $i18n['newsuccess_getemail'] ?>" required="">
+                        <button type="submit" class="main-form__button"><?= $i18n['newsuccess_instr'] ?></button>
                     </form>
                 </div>
             </div>
@@ -86,8 +89,7 @@ $phone = isset($_SESSION['phone']) ? $_SESSION['phone'] : '-';
     </main>
     <footer class="footer">
         <div class="footer__text">
-            Мы не разглашаем Ваши личные данные и не передаем оставленную Вами информацию третьим лицам. Нажав на
-            кнопку, вы соглашаетесь на получение новостей об акциях, скидках и новинках.
+            <?= $i18n['newsuccess_info'] ?> <?= $i18n['newsuccess_agree'] ?>
         </div>
     </footer>
 </div>

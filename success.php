@@ -72,6 +72,7 @@ if (empty($order)) {
     $_SESSION['order'] = $order;
     $_SESSION['name'] = $name;
     $_SESSION['phone'] = $phone;
+    $_SESSION['language'] = isset($_POST['language']) ? $_POST['language'] : 'ru';
     header('Location: success.php?order_status=success');
 }
 
