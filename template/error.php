@@ -25,22 +25,12 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-<div class="wrap">
-    <header class="header">
-        <div class="header__left" style="width: 100%; text-align: center; border-right: none;">
-            <div class="header__title">
-                Ошибка!
-            </div>
-            <div class="header__description">
-                <h3>Не удалось создать заказ. Повторите позже.</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 thanks">
+                <h2><?=$i18n['double'];?></h2>
             </div>
         </div>
-    </header>
-    <footer class="footer">
-        <div class="footer__text">
-            Мы не разглашаем Ваши личные данные и не передаем оставленную Вами информацию третьим лицам.
-        </div>
-    </footer>
-</div>
+    </div>
 </body>
 </html>

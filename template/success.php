@@ -18,7 +18,6 @@ if (file_exists($translationDir)) {
     <title><?= $i18n['newsuccess_thanks'] ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700&amp;subset=cyrillic" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
     <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="img/apple-icon-72x72.png">
@@ -36,63 +35,72 @@ if (file_exists($translationDir)) {
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+    <link href="css/bootstrap.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/media.css" media="all and (max-width:1200px)">
 </head>
 <body>
-<div class="wrap">
-    <header class="header">
-        <div class="header__left">
-            <div class="header__title">
-                <?= $i18n['newsuccess_thanks'] ?>
-            </div>
-            <div class="header__description">
-                <h3><?= $i18n['newsuccess_dontturnoff'] ?></h3>
-                <?= $i18n['newsuccess_orderaccept'] ?> <?= $i18n['newsuccess_contactyou'] ?>
-            </div>
-        </div>
-        <div class="header__right">
-            <div class="header__info">
-                <div class="header__info-title">
-                    <?= $i18n['newsuccess_orderinfo'] ?>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 thanks">
+                    <h2><?=$i18n['newsuccess_thanks'];?></h2>
+                    <p><?=$i18n['newsuccess_orderaccept'];?> <?=$i18n['newsuccess_contactyou'];?></p>
                 </div>
-                <div class="header__info-order"><?= $order ?></div>
-                <div class="header__info-phone"><?= $phone ?></div>
-                <div class="header__info-name"><?= $name ?></div>
+                <div class="col-lg-offset-5 col-md-offset-5 col-sm-offset-5 col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="info">
+                        <p><?=$i18n['newsuccess_orderinfo'];?></p>
+                        <p><span class="blue big"><?= $order ?></span></p>
+                        <p><?= $phone ?></p>
+                        <p><?= $name ?></p>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
-    <main class="main-content">
-        <h1 class="main-content__title"><?= $i18n['newsuccess_howto'] ?></h1>
-        <div class="main-content__description">
-            <?= $i18n['newsuccess_getinstr'] ?>
-        </div>
-        <div class="form-block">
-            <div class="form-block__left">
-                <div class="form-block__left-info">
-                    <?= $i18n['newsuccess_confirm'] ?>
-                </div>
-                <div class="form-block__left-discount">
-                    <?= $i18n['newsuccess_discount'] ?>
-                </div>
-            </div>
-            <div class="form-block__right">
-                <div class="form-wrap">
-                    <div class="form-wrap__title">
-                        <?= $i18n['newsuccess_email'] ?>
+    <div class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                    <h2><?=$i18n['newsuccess_howto'];?></h2>
+                    <p><?=$i18n['newsuccess_confirm'];?></p>
+                    <div class="discount">
+                        <div class="manager">
+                            <img src="img/manager_1.png" alt="">
+                            <div class="right">
+                                <p><?=$i18n['newsuccess_discount'];?></p>
+                            </div>
+                            <div class="text_manager">
+                                <p><span><?=$i18n['managername'];?></span><br>
+                                <?=$i18n['manager'];?></p>
+                            </div>
+
+                        </div>
                     </div>
-                    <form action="#" class="main-form" method="POST">
-                        <input type="email" name="email" class="main-form__email" placeholder="<?= $i18n['newsuccess_getemail'] ?>" required="">
-                        <button type="submit" class="main-form__button"><?= $i18n['newsuccess_instr'] ?></button>
-                    </form>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                    <div class="form_wrapper">
+                        <div class="order_form">
+                            <p><?=$i18n['newsuccess_email'];?></p>
+
+                            <form action="#" method="post" class="main-form">
+                                <!--<p></p>-->
+                                <input class="name" name="name" type="hidden"  value="<?= $name ?>">
+                                <p><?=$i18n['newsuccess_getemail'];?></p>
+                                <input class="email" name="email" type="text" placeholder="e-mail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="xxxxxx@yyyyy.zzz">
+                                <button type="submit" class="main-form__button"><?=$i18n['newsuccess_instr'];?></button>
+                                <div class="footer_form">
+                                    <div><img src="img/check.png" alt=""></div>
+                                    <p><?=$i18n['newsuccess_info'];?> <br>
+                                        <?=$i18n['newsuccess_agree'];?> </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
-    <footer class="footer">
-        <div class="footer__text">
-            <?= $i18n['newsuccess_info'] ?> <?= $i18n['newsuccess_agree'] ?>
-        </div>
-    </footer>
-</div>
+    </div>
 <script src="js/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
