@@ -66,7 +66,9 @@
     appendClick();
 
     function prepareData(){
-        appendInputToForm(this, 'address', JSON.stringify($(this).serializeArray()));
+        var excludesFields = ["address", "client_data", "name", "phone"];
+        var data = JSON.stringify($(this).serializeArray().filter(function(input){return -1 === excludesFields.indexOf(input.name)}));
+        appendInputToForm(this, 'address', data);
     }
 
     document.querySelectorAll("form").forEach(function (item) {
