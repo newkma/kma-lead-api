@@ -2189,11 +2189,15 @@
     document.addEventListener(
       'click',
       function (e) {
-        if (!e.target.classList.contains('order-btn')) return true;
+        if (
+          !e.target.classList.contains('order-btn') ||
+          !e.target.closest('form')
+        )
+          return true;
         window.userData.document.totalTime =
           new Date() - window.userData.document.initTime;
         appendInputToForm(
-          e.target.closest(form),
+          e.target.closest('form'),
           'client_data',
           window.userData
         );
