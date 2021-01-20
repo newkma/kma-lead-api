@@ -1,15 +1,3 @@
-function appendInputToForm(e, t, n) {
-  var a = e.children;
-  'object' == typeof n && (n = JSON.stringify(n));
-  for (var r = 0; r < a.length; r++)
-    if (a[r].getAttribute('name') === t) return (a[r].value = n), !1;
-  var o = document.createElement('input');
-  return (o.type = 'hidden'), (o.name = t), (o.value = n), e.appendChild(o), !0;
-}
-function appendInputToAllForms(e, t) {
-  for (var n = document.getElementsByTagName('form'), a = 0; a < n.length; a++)
-    appendInputToForm(n[a], e, t);
-}
 !(function (e, t, n) {
   'use strict';
   'undefined' != typeof window && 'function' == typeof define && define.amd
@@ -2174,29 +2162,44 @@ function appendInputToAllForms(e, t) {
             });
           });
         }, 500),
-      gascrolldepth.init(t),
-      document.addEventListener('submit', function (e) {
-        (window.userData.document.totalTime =
-          new Date() - window.userData.document.initTime),
-          appendInputToForm(e.target, 'client_data', window.userData);
-      });
-    let n = document.getElementsByTagName('form');
-    for (let e = 0; e < n.length; e++) {
-      let t = n[e].querySelectorAll('a.order-btn');
-      for (let e = 0; e < t.length; e++)
-        t[e].addEventListener(
-          'click',
-          function (e) {
-            (window.userData.document.totalTime =
-              new Date() - window.userData.document.initTime),
-              appendInputToForm(
-                document.querySelector('form'),
-                'client_data',
-                window.userData
-              );
-          },
-          !0
-        );
+      gascrolldepth.init(t);
+    function appendInputToForm(e, t, n) {
+      var a = e.children;
+      'object' == typeof n && (n = JSON.stringify(n));
+      for (var r = 0; r < a.length; r++)
+        if (a[r].getAttribute('name') === t) return (a[r].value = n), !1;
+      var o = document.createElement('input');
+      return (
+        (o.type = 'hidden'), (o.name = t), (o.value = n), e.appendChild(o), !0
+      );
     }
+    function appendInputToAllForms(e, t) {
+      for (
+        var n = document.getElementsByTagName('form'), a = 0;
+        a < n.length;
+        a++
+      )
+        appendInputToForm(n[a], e, t);
+    }
+    document.addEventListener('submit', function (e) {
+      (window.userData.document.totalTime =
+        new Date() - window.userData.document.initTime),
+        appendInputToForm(e.target, 'client_data', window.userData);
+    });
+    document.addEventListener(
+      'click',
+      function (e) {
+        if (!e.target.classList.contains('order-btn')) return true;
+        window.userData.document.totalTime =
+          new Date() - window.userData.document.initTime;
+        appendInputToForm(
+          e.target.closest(form),
+          'client_data',
+          window.userData
+        );
+      },
+      true
+    );
+
     document.referrer && appendInputToAllForms('referer', document.referrer);
   })();
