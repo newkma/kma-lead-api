@@ -79,7 +79,7 @@ class KmaLead
             $this->echoDebugMessage(" - Отправка запроса апи - ");
             $headers = $this->getHeaders();
             curl_setopt($curl, CURLOPT_URL, $this->leadUrl);
-            curl_setopt($curl, CURLOPT_HEADER, false);
+            curl_setopt($curl, CURLOPT_HEADER, true);
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
@@ -89,7 +89,7 @@ class KmaLead
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             $result = curl_exec($curl);
-            if (curl_errno($curl) && in_array(curl_errno($curl), [CURLE_OPERATION_TIMEDOUT, CURLE_OPERATION_TIMEOUTED])) {
+            if (in_array(curl_errno($curl), [CURLE_OPERATION_TIMEDOUT]) || curl_getinfo($curl, CURLINFO_RESPONSE_CODE) != 200) {
                 try {
                     $fp = fopen(__DIR__ . '/lead-' . sha1(KMA_ACCESS_TOKEN . KMA_CHANNEL) . '.txt', 'a+');
                     fwrite($fp, json_encode(['ts' => time(), 'data' => $data, 'headers' => $headers], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\r\n");
