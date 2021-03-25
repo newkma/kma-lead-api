@@ -44,15 +44,12 @@ class KmaLead
     public function addLead($data)
     {
         $result = $this->sendRequest($data);
-        $this->echoDebugMessage($data);
         $array = json_decode($result, true);
-        $this->echoDebugMessage(json_last_error() === JSON_ERROR_NONE ? $array : $result);
         if (isset($array['order'])) {
             return $array['order'];
         }
         if (isset($array['code'], $array['message'])) {
-            $this->echoDebugMessage("Код ошибки: {$array['code']}. Текст ошибки: {$array['message']}");
-            return false;
+            $this->echoDebugMessage("<strong>Код ошибки: {$array['code']}. Текст ошибки: {$array['message']}</strong>");
         }
         return false;
     }
@@ -63,9 +60,7 @@ class KmaLead
      */
     public function addLeadAndReturnPage($data)
     {
-        $result = $this->sendRequest($data);
-        $this->echoDebugMessage($data);
-        return $result;
+        return $this->sendRequest($data);
     }
 
     /**
@@ -76,7 +71,6 @@ class KmaLead
     {
         $this->setHeaders();
         if ($curl = curl_init()) {
-            $this->echoDebugMessage(" - Отправка запроса апи - ");
             $headers = $this->getHeaders();
             curl_setopt($curl, CURLOPT_URL, $this->leadUrl);
             curl_setopt($curl, CURLOPT_HEADER, true);
@@ -88,7 +82,9 @@ class KmaLead
             curl_setopt($curl, CURLOPT_TIMEOUT,15);
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-            $result = curl_exec($curl);
+            $response = curl_exec($curl);
+            $header = substr($response, 0, curl_getinfo($curl, CURLINFO_HEADER_SIZE));
+            $result = substr($response, curl_getinfo($curl, CURLINFO_HEADER_SIZE));
             if (in_array(curl_errno($curl), [CURLE_OPERATION_TIMEDOUT]) || curl_getinfo($curl, CURLINFO_RESPONSE_CODE) != 200) {
                 try {
                     $fp = fopen(__DIR__ . '/lead-' . sha1(KMA_ACCESS_TOKEN . KMA_CHANNEL) . '.txt', 'a+');
@@ -97,9 +93,11 @@ class KmaLead
                 } catch (Exception $e) {}
                 $result = json_encode(['order' => 'X', 'code' => 0, 'message' => 'LOCAL SAVE']);
             }
-            $header_out = curl_getinfo($curl, CURLINFO_HEADER_OUT);
             curl_close($curl);
-            $this->echoDebugMessage("<pre>$header_out</pre>");
+            $this->echoDebugMessage(curl_getinfo($curl, CURLINFO_HEADER_OUT));
+            $this->echoDebugMessage($data);
+            $this->echoDebugMessage($header);
+            $this->echoDebugMessage($result);
             return $result;
         }
         return false;
@@ -182,7 +180,7 @@ class KmaLead
                 print_r($data);
                 echo '</pre>';
             } else {
-                echo "<br> $data <br>";
+                echo "<pre>$data</pre>";
             }
         }
     }
