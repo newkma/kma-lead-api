@@ -93,11 +93,11 @@ class KmaLead
                 } catch (Exception $e) {}
                 $result = json_encode(['order' => 'X', 'code' => 0, 'message' => 'LOCAL SAVE']);
             }
-            curl_close($curl);
             $this->echoDebugMessage(curl_getinfo($curl, CURLINFO_HEADER_OUT));
             $this->echoDebugMessage($data);
             $this->echoDebugMessage($header);
             $this->echoDebugMessage($result);
+            curl_close($curl);
             return $result;
         }
         return false;
