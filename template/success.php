@@ -10,6 +10,8 @@ if (file_exists($translationDir)) {
     $i18nFile = file_exists("$translationDir/$language.php") ? "$translationDir/$language.php" : "$translationDir/ru.php";
     include_once $i18nFile;
 }
+
+$fbp = isset($_SESSION['fbp']) ? $_SESSION['fbp'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -116,5 +118,15 @@ if (file_exists($translationDir)) {
         });
     });
 </script>
+<script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '<?= $fbp ?>');
+    fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=<?=fbp?>&ev=PageView&noscript=1"/></noscript>
 </body>
 </html>
