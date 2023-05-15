@@ -10,29 +10,43 @@ if (is_file('config.php')) {
 
 $file = __DIR__ . '/lead-' . sha1(KMA_ACCESS_TOKEN . KMA_CHANNEL) . '.txt';
 
-$resend = '';
+$resend = $result = '';
 
 $fn = fopen($file,'r');
+if (empty($fn)) {
+    exit('Файл с неотправленными лидами не найден');
+}
 while(! feof($fn))  {
-    $result = fgets($fn);
-    $array = json_decode($result, true);
+    $line = fgets($fn);
+    $array = json_decode($line, true);
     if (json_last_error() === JSON_ERROR_NONE && is_array($array)) {
         require_once 'KmaLead.php';
         /** @var KmaLead $kma */
         $kma = new KmaLead($token);
         $response = $kma->resendRequest($array['data'], $array['headers']);
-        if (!isset($response['order'])) {
-            $resend .= $result . "\r\n";
+        $data = json_decode($response, true);
+        if (!isset($data['order'])) {
+            $resend .= $line . "\r\n";
+            if (isset($data['message'])) {
+                $result .= "Лид не добавлен: {$data['message']}\r\n";
+            } else {
+                $result .= "Ошибка добавления лида: $response\r\n";
+            }
+        } else {
+            $result .= "Лид успешно добавлен: {$data['order']}\r\n";
         }
     }
 }
 fclose($fn);
 
-
 if (empty($resend)) {
     @unlink($file);
 } else {
     file_put_contents($file, $resend);
+}
+
+if ($result) {
+    echo "<pre>"; echo $result; echo "</pre>";
 }
 
 exit;
