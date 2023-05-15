@@ -28,12 +28,12 @@ while(! feof($fn))  {
         if (!isset($data['order'])) {
             $resend .= $line . "\r\n";
             if (isset($data['message'])) {
-                $result .= "Лид не добавлен: {$data['message']}\r\n";
+                $result .= 'Лид не добавлен: ' . $data['message'] . "\r\n";
             } else {
-                $result .= "Ошибка добавления лида: $response\r\n";
+                $result .= 'Ошибка добавления лида: ' . $response . "\r\n";
             }
         } else {
-            $result .= "Лид успешно добавлен: {$data['order']}\r\n";
+            $result .= 'Лид успешно добавлен: ' . $data['order'] . "\r\n";
         }
     }
 }
@@ -46,7 +46,7 @@ if (empty($resend)) {
 }
 
 if ($result) {
-    echo "<pre>"; echo $result; echo "</pre>";
+    echo "<pre>" . $result . "</pre>";
 }
 
 exit;
